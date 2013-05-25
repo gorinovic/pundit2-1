@@ -3,10 +3,10 @@
 	url = git://github.com/xsokev/Dojo-Bootstrap.git
 [submodule "lib/dojo/dijit"]
 	path = lib/dojo/dijit
-	url = git@github.com:dojo/dijit.git
+	url = git://github.com:dojo/dijit.git
 [submodule "lib/dojo/dojo"]
 	path = lib/dojo/dojo
-	url = git@github.com:dojo/dojo.git
+	url = git://github.com:dojo/dojo.git
 [submodule "lib/dojo/dojox"]
 	path = lib/dojo/dojox
-	url = git@github.com:dojo/dojox.git
+	url = git://github.com:dojo/dojox.git

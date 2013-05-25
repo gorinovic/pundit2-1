@@ -1,0 +1,3 @@
+[submodule "lib/dojo-bootstrap"]
+	path = lib/dojo-bootstrap
+	url = git://github.com/xsokev/Dojo-Bootstrap.git

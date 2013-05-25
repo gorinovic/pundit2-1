@@ -1,4 +1,5 @@
-pundit2
-=======
+# Pundit2 welcomes you!
 
-Pundit 2
+* Be sure to read INSTALL.md if you plan running the tests or anything else
+
+.. more to come.

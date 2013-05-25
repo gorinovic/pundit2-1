@@ -38,11 +38,16 @@
             dojoConfig.packages[idx].location = cov;
         }
     </script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../lib/dojo/dojo/dojo.js"></script>
-    
+
+<body>    
+    <div id="mocha"></div>
+
     <script>
     
-        require(['require', 'chai/chai', 'mocha/mocha'], function(require, chai){
+        require(['require'], function(require){
 
             mocha.setup('tdd');
             expect = chai.expect;
@@ -80,7 +85,6 @@
                         }
                     });
                     
-                    
                 });
                 
             });
@@ -88,6 +92,5 @@
         });
     </script>
 
-<body>    
-    <div id="mocha"></div>
+
 </html></body>

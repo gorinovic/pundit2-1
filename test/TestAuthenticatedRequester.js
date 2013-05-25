@@ -63,6 +63,25 @@ define(["pundit/AuthenticatedRequester"], function(AuthenticatedRequester) {
                 expect(ar.redirectURL).equal(redirectTo);
         });
 
+        test('xPut must call dojo.xPut adding withCredentials: true and modifing load()', function() {
+            var fun = function() { return; },
+                args = {load: fun, more: 'stuff'},
+                foo = {xhrPut: args}
+
+            // Overwrite xhrPut and just intercept the params
+            dojo.xhrPut = function(p) { foo.xhrPut = p; }
+
+            // Before the call: no .withCredentials, original .load function
+            expect(foo.xhrPut.load.toString()).equal(fun.toString());
+            expect(foo.xhrPut.withCredentials).equal(undefined);
+
+            ar.xPut({load: fun, more: 'stuff'});
+
+            expect(foo.xhrPut.withCredentials).equal(true);
+            expect(foo.xhrPut.load.toString()).not.equal(fun.toString());
+            expect(foo.xhrPut.more).equal('stuff');
+        });
+
     });
 
 });

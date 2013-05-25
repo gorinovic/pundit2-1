@@ -1,0 +1,19 @@
+dojoConfig = {
+    isDebug: 1,
+    parseOnLoad: true,
+    
+    has: {
+        "dojo-debug-messages": true
+    },
+    packages: [
+        { name: 'pundit', location: '/pundit2/src' },
+        { name: 'cov', location: '/pundit2/cov' },
+        { name: 'bootstrap', location: '/pundit2/lib/dojo-bootstrap' },
+        { name: 'myTest', location: '/pundit2/test' },
+        { name: 'mocha', location: '/pundit2/node_modules/mocha' },
+        { name: 'chai', location: '/pundit2/node_modules/chai' }
+    ],
+    
+    waitSeconds: 10,
+    cacheBust: true
+};

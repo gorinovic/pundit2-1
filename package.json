@@ -1,0 +1,22 @@
+{
+    "name": "PUNDIT2",
+    "version": "1.99.0",
+    "dependencies": {
+        "yuidocjs": "0.3.35"
+    },
+    "devDependencies": {
+        "mocha": "1.x",
+        "chai": "1.6.x",
+        "jsdom": "0.6.x",
+        "jscoverage": "0.3.6",
+        "mocha-lcov-reporter" : "0.0.1",
+        "coveralls": "2.x"
+    },
+    "scripts": {
+        "test": "make test-coveralls"
+    },
+    "license": "AGPL 3.0",
+    "engine": {  
+        "node": ">=0.8"
+    }
+}

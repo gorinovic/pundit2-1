@@ -2,7 +2,7 @@
     "project": {
         "name": "Pundit",
         "description": "Augment web pages with semantically structured annotations.",
-        "version": "ASK Ask_0.1",
+        "version": "ASK Pundit_1.99.0",
         "url": "http://thepund.it/docs",
         "logo": "http://thepund.it/assets/img/pundit_500.png"
     },
@@ -27,10 +27,21 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/Configuration.js": {
+            "name": "src/Configuration.js",
+            "modules": {},
+            "classes": {
+                "pundit.Configuration": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/Namespace.js": {
             "name": "src/Namespace.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "pundit.ns": 1
+            },
             "fors": {},
             "namespaces": {}
         }
@@ -41,12 +52,14 @@
             "submodules": {},
             "classes": {
                 "pundit.authenticatedRequester": 1,
-                "pundit.baseComponent": 1
+                "pundit.baseComponent": 1,
+                "pundit.Configuration": 1,
+                "pundit.ns": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/BaseComponent.js",
+            "file": "src/Namespace.js",
             "line": 1,
             "description": "Provides common facilities used by other pundit\ncomponents, such as callback creation, initialization, logging, etc.\n\nEvery component extending this class will be able to use these methods,\nand the options passed to the constructor.\n\nIf the component has an .opts field, it will be used as defaults for the\ncomponent, overwritable when calling new"
         }
@@ -89,6 +102,35 @@
                     "type": "Object"
                 }
             ]
+        },
+        "pundit.Configuration": {
+            "name": "pundit.Configuration",
+            "shortname": "pundit.Configuration",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pundit",
+            "namespace": "",
+            "file": "src/Configuration.js",
+            "line": 20,
+            "extends": "pundit.baseComponent",
+            "description": "This component deals with the various layers of Pundit \nconfiguration.<br>\nThese layers are: <br>\n1. component defaults <br>\n2. global Configuration defaults <br>\n3. user supplied configuration file <br>\n4. parameters passed to the component constructor <br>\nWhen initialized, the Configuration module will merge the levels 2 and \n3, creating the .config field in the global pundit live object (_PUNDIT).<br>\nWhen a component is initialized its final .opts field will be a merge\nof all of those levels: 4 being the higher priority.<br>"
+        },
+        "pundit.ns": {
+            "name": "pundit.ns",
+            "shortname": "pundit.ns",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pundit",
+            "namespace": "",
+            "file": "src/Namespace.js",
+            "line": 1,
+            "description": "Provides various URIs used all around Pundit, from rdf type, label, comment\nto the predicates used to describe items and notebooks etc"
         }
     },
     "classitems": [
@@ -347,19 +389,320 @@
             "module": "pundit"
         },
         {
-            "file": "src/Namespace.js",
-            "line": 16,
-            "description": "Initializes the ns properties",
+            "file": "src/Configuration.js",
+            "line": 50,
+            "itemtype": "property",
+            "name": "punditConfig.annotationServerBaseURL",
+            "type": "string",
+            "description": "Absolute base URL of the Pundit server side APIs, ending\nwith /",
+            "default": "http://metasound.dibet.univpm.it/annotationserver/",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 59,
+            "itemtype": "property",
+            "name": "punditConfig.debugAllModules",
+            "type": "boolean",
+            "description": "Activates/deactivates debug mode for every component",
+            "default": "false",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 67,
+            "itemtype": "property",
+            "name": "punditConfig.enableSemanticExpansion",
+            "type": "boolean",
+            "description": "Enables/disables the link to LodLive for exploring Linked Data around items",
+            "default": "false",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 75,
+            "itemtype": "property",
+            "name": "punditConfig.enableEntitiesExtraction",
+            "type": "boolean",
+            "description": "Enables/disables the automatic entitities extraction from text in the page",
+            "default": "false",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 84,
+            "itemtype": "property",
+            "name": "punditConfig.vocabularies",
+            "type": "array or URLs",
+            "description": "Specifies vocaularies that will be available to Pundit users. \nVocabularies have a unique name and a description. They can be of different\ntypes: taxonomy (defines a hierarchy of terms), relations (defines a list \nof relations with domain and ranges). Each vocabulary definition is a JSONP\nfile available on the Web and is loaded by resolving an absolute URL.",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 95,
+            "itemtype": "property",
+            "name": "punditConfig.useBasicRelations",
+            "type": "boolean",
+            "description": "Loads Pundit's basic relations",
+            "default": "true",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 273,
+            "itemtype": "property",
+            "name": "punditConfig.modules",
+            "type": "object",
+            "description": "Configuration for various Pundit optional modules",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 280,
+            "itemtype": "property",
+            "name": "punditConfig.modules.annotators",
+            "type": "object",
+            "description": "Configuration for Pundit annotators: components who\ndeal (read, write, visualize etc) with various type of items used\ninto annotations, for example text fragments, image fragments etc.",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 294,
+            "itemtype": "property",
+            "name": "punditConfig.modules.selectors",
+            "type": "object",
+            "description": "Configuration for Pundit selectors: components who\nretrieve items from remote sources like Freebase, Wordnet, Europeana\netc. Each children should be named after a Selector found in src/selectors\nomitting the ending part \"Selector\". Each object must contain the\nproperties name (string), label (string) and active (boolean). Moreover\nit can contain selector-specific configuration options, like europeanaKey\nor limit or keyInputTimerLength. See each selector docs for more info.",
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Configuration.js",
+            "line": 421,
             "itemtype": "method",
-            "name": "constructor",
+            "name": "isModuleActive",
+            "description": "Returns true if the given module name is active",
             "params": [
                 {
-                    "name": "options",
-                    "description": "",
-                    "type": "Object"
+                    "name": "name",
+                    "description": "a module name",
+                    "type": "String"
                 }
             ],
-            "class": "",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "pundit.Configuration",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 88,
+            "description": "RDF predicates to object properties of items.\nNot present in this list: \n        \n.value which contains the full URI\n        \n.rdfData which can get created by a .createBucketFor* method",
+            "itemtype": "property",
+            "name": "items",
+            "final": "",
+            "type": "Object",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 100,
+            "description": "Short label (usually 30-40 chars or so), see rdfs_label",
+            "itemtype": "property",
+            "name": "items.label",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 106,
+            "description": "Preferred label",
+            "itemtype": "property",
+            "name": "items.prefLabel",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 112,
+            "description": "Alternative labels",
+            "itemtype": "property",
+            "name": "items.altLabel",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 118,
+            "description": "Long description or content of a text fragment",
+            "itemtype": "property",
+            "name": "items.description",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 124,
+            "description": "Image contained in the text fragment, or associated with the item",
+            "itemtype": "property",
+            "name": "items.image",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 132,
+            "description": "Used for item types, see rdf_type",
+            "itemtype": "property",
+            "name": "items.type",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 138,
+            "description": "Web URL where the item has been created",
+            "itemtype": "property",
+            "name": "items.pageContext",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 144,
+            "description": "Closest named content or container for this item",
+            "itemtype": "property",
+            "name": "items.isPartOf",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 150,
+            "description": "TODO",
+            "itemtype": "property",
+            "name": "items.selector",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 155,
+            "description": "TODO",
+            "itemtype": "property",
+            "name": "items.parentItemXP",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 185,
+            "description": "RDF predicates to objects properties used by Notebooks",
+            "itemtype": "property",
+            "name": "notebooks",
+            "final": "",
+            "type": "Object",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 191,
+            "description": "Name of the notebook",
+            "itemtype": "property",
+            "name": "notebooks.label",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 197,
+            "description": "Can be public or private",
+            "itemtype": "property",
+            "name": "notebooks.visibility",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 203,
+            "description": "TODO",
+            "itemtype": "property",
+            "name": "notebooks.created",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 209,
+            "description": "Creator and owner of the notebook",
+            "itemtype": "property",
+            "name": "notebooks.creator",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 215,
+            "description": "Name of the creator and owner of the notebook",
+            "itemtype": "property",
+            "name": "notebooks.creatorName",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 221,
+            "description": "Notebook's id",
+            "itemtype": "property",
+            "name": "notebooks.id",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 227,
+            "description": "Annotations this notebook includes",
+            "itemtype": "property",
+            "name": "notebooks.includes",
+            "final": "",
+            "class": "pundit.ns",
+            "module": "pundit"
+        },
+        {
+            "file": "src/Namespace.js",
+            "line": 233,
+            "description": "Rdf type of the notebook, see rdf_type",
+            "itemtype": "property",
+            "name": "notebooks.type",
+            "final": "",
+            "class": "pundit.ns",
             "module": "pundit"
         }
     ],

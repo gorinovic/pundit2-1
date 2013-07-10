@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: ASK Ask_0.1</em>
+            <em>API Docs for: ASK Pundit_1.99.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -44,6 +44,10 @@
                 <li><a href="..&#x2F;classes/pundit.authenticatedRequester.html">pundit.authenticatedRequester</a></li>
             
                 <li><a href="..&#x2F;classes/pundit.baseComponent.html">pundit.baseComponent</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.Configuration.html">pundit.Configuration</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.ns.html">pundit.ns</a></li>
             
             </ul>
 
@@ -90,14 +94,12 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-define([
-        &quot;dojo&#x2F;_base&#x2F;declare&quot;
-    ], 
-
-    function(
-        declare
-    ) {
-
+&#x2F;**
+    Provides various URIs used all around Pundit, from rdf type, label, comment
+    to the predicates used to describe items and notebooks etc
+    @class pundit.ns
+**&#x2F;
+define([&quot;dojo&#x2F;_base&#x2F;declare&quot;], function(declare) {
     return declare(&quot;pundit.ns&quot;, [], {
 
     defaultOpts: {
@@ -105,11 +107,6 @@ define([
         libName: &#x27;&#x27;
     },
 
-    &#x2F;**
-    * Initializes the ns properties
-    * @method constructor
-    * @param options {object}
-    *&#x2F;
     constructor: function() {
         var self = this;
         
@@ -121,29 +118,28 @@ define([
         self.rdfs_label = &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;01&#x2F;rdf-schema#label&quot;;
         self.rdfs_comment = &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;01&#x2F;rdf-schema#comment&quot;;
         self.rdfs_resource = &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;01&#x2F;rdf-schema#Resource&quot;;
-		self.rdfs_literal = &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;01&#x2F;rdf-schema#Literal&quot;;
+        self.rdfs_literal = &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;01&#x2F;rdf-schema#Literal&quot;;
         self.rdfs_seeAlso = &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;01&#x2F;rdf-schema#seeAlso&quot;;
         
         &#x2F;&#x2F; Types used to denote a webpage, a text fragment, an image, an annotation
         self.page = &quot;http:&#x2F;&#x2F;schema.org&#x2F;WebPage&quot;;
         self.image = &quot;http:&#x2F;&#x2F;xmlns.com&#x2F;foaf&#x2F;0.1&#x2F;Image&quot;;
-        &#x2F;&#x2F;self.image_fragment = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;fragment-image&quot;;
         self.annotation = &quot;http:&#x2F;&#x2F;www.openannotation.org&#x2F;ns&#x2F;Annotation&quot;;
 
         self.pundit_annotationId = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#id&quot;;
         self.pundit_annotationDate = &quot;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;created&quot;;
-		self.pundit_authorName = &quot;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;elements&#x2F;1.1&#x2F;creator&quot;;
-		self.pundit_userName = &quot;http:&#x2F;&#x2F;xmlns.com&#x2F;foaf&#x2F;0.1&#x2F;name&quot;;
+        self.pundit_authorName = &quot;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;elements&#x2F;1.1&#x2F;creator&quot;;
+        self.pundit_userName = &quot;http:&#x2F;&#x2F;xmlns.com&#x2F;foaf&#x2F;0.1&#x2F;name&quot;;
         self.pundit_authorURI = &quot;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;creator&quot;;
-		self.pundit_hasTarget = &quot;http:&#x2F;&#x2F;www.openannotation.org&#x2F;ns&#x2F;hasTarget&quot;;
-		self.pundit_hasTag = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#hasTag&quot;;
+        self.pundit_hasTarget = &quot;http:&#x2F;&#x2F;www.openannotation.org&#x2F;ns&#x2F;hasTarget&quot;;
+        self.pundit_hasTag = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#hasTag&quot;;
         self.pundit_hasComment = &quot;http:&#x2F;&#x2F;schema.org&#x2F;comment&quot;;
-		self.pundit_isIncludedIn = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#isIncludedIn&quot;;
+        self.pundit_isIncludedIn = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#isIncludedIn&quot;;
 
         self.pundit_VocabCategory = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;vocab&#x2F;category&quot;;
         
         &#x2F;&#x2F; Annotation server constants
-        self.as                   = &quot;http:&#x2F;&#x2F;metasound.dibet.univpm.it:8080&#x2F;annotationserver&#x2F;&quot;;
+        self.as                   = &quot;http:&#x2F;&#x2F;as.thepund.it:8080&#x2F;annotationserver&#x2F;&quot;;
         self.asApi                = self.as + &quot;api&#x2F;&quot;;
 
         self.asNbAnnList          = self.asApi + &quot;notebooks&#x2F;{id}&#x2F;annotations&#x2F;metadata&quot;;
@@ -172,42 +168,90 @@ define([
         self.asStorage            = self.asApi + &quot;services&#x2F;preferences&#x2F;&quot;;
         self.asVocabProxy         = self.asApi + &quot;services&#x2F;proxy&quot;;
 
-		self.asUsers              = self.asApi + &quot;users&#x2F;&quot;;
+        self.asUsers              = self.asApi + &quot;users&#x2F;&quot;;
         self.asUsersCurrent       = self.asApi + &quot;users&#x2F;current&quot;;
         self.asUsersLogout        = self.asApi + &quot;users&#x2F;logout&quot;;
-		
-		self.lodLiveURL  = &quot;http:&#x2F;&#x2F;thepund.it&#x2F;lodlive&#x2F;app_en.html&quot;;
-		
-		self.notebooksNamespace = &quot;http:&#x2F;&#x2F;swickynotes.org&#x2F;notebook&#x2F;resource&#x2F;&quot;;
-		self.usersNamespace = &quot;http:&#x2F;&#x2F;swickynotes.org&#x2F;notebook&#x2F;resource&#x2F;&quot;;
-        
+
+        self.lodLiveURL  = &quot;http:&#x2F;&#x2F;thepund.it&#x2F;lodlive&#x2F;app_en.html&quot;;
+
+        self.notebooksNamespace = &quot;http:&#x2F;&#x2F;swickynotes.org&#x2F;notebook&#x2F;resource&#x2F;&quot;;
+        self.usersNamespace = &quot;http:&#x2F;&#x2F;swickynotes.org&#x2F;notebook&#x2F;resource&#x2F;&quot;;
         
         &#x2F;&#x2F; TODO x marco: move this into the component using these urls, as configurable parameters
         self.dbpediaSpotlightAnnotate = &quot;http:&#x2F;&#x2F;spotlight.dbpedia.org&#x2F;rest&#x2F;annotate?text=&quot;;
         self.dbpediaKeywordSearch = &quot;http:&#x2F;&#x2F;lookup.dbpedia.org&#x2F;api&#x2F;search.asmx&#x2F;KeywordSearch&quot;;
-        
  
-        &#x2F;&#x2F; RDF predicates used in items to translate to RDF the item&#x27;s fields.
-        &#x2F;&#x2F; Not present in this list: 
-        &#x2F;&#x2F; .value which contains the full URL
-        &#x2F;&#x2F; .rdfData which can get created by a .createBucketFor* method
+        &#x2F;**
+            RDF predicates to object properties of items.
+            Not present in this list: 
+        
+            .value which contains the full URI
+        
+            .rdfData which can get created by a .createBucketFor* method
+            @const items
+            @type Object
+        **&#x2F;
         self.items = {
-            &#x2F;&#x2F; Short label (usually 30-40 chars or so)
+
+            &#x2F;** 
+                Short label (usually 30-40 chars or so), see rdfs_label
+                @const items.label 
+            **&#x2F;
             label: self.rdfs_label,
+
+            &#x2F;** 
+                Preferred label
+                @const items.prefLabel 
+            **&#x2F;
             prefLabel: &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2004&#x2F;02&#x2F;skos&#x2F;core#prefLabel&quot;,
+
+            &#x2F;** 
+                Alternative labels
+                @const items.altLabel 
+            **&#x2F;
             altLabel: &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2004&#x2F;02&#x2F;skos&#x2F;core#altLabel&quot;,
-            &#x2F;&#x2F; Long description or content of a text fragment
+
+            &#x2F;** 
+                Long description or content of a text fragment
+                @const items.description 
+            **&#x2F;
             description: &quot;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;elements&#x2F;1.1&#x2F;description&quot;,
-            &#x2F;&#x2F; Image contained in the text fragment, or associated with the item
+
+            &#x2F;** 
+                Image contained in the text fragment, or associated with the item
+                @const items.image 
+            **&#x2F;
             image: &quot;http:&#x2F;&#x2F;xmlns.com&#x2F;foaf&#x2F;0.1&#x2F;depiction&quot;,
-            &#x2F;&#x2F; RDF types of this item
+
+            &#x2F;&#x2F; TODO: the items have an rdfType field which contains the types, call
+            &#x2F;&#x2F;       this rdfTypes as well?
+            &#x2F;** 
+                Used for item types, see rdf_type
+                @const items.type 
+            **&#x2F;
             type: self.rdf_type,
-            &#x2F;&#x2F; Page where this item has been created
+
+            &#x2F;** 
+                Web URL where the item has been created
+                @const items.pageContext 
+            **&#x2F;
             pageContext: &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#hasPageContext&quot;,
+
+            &#x2F;** 
+                Closest named content or container for this item
+                @const items.isPartOf 
+            **&#x2F;
             isPartOf: &quot;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;isPartOf&quot;,
             
-            &#x2F;&#x2F;Selector
+            &#x2F;** 
+                TODO
+                @const items.selector 
+            **&#x2F;
             selector: &quot;http:&#x2F;&#x2F;www.w3.org&#x2F;ns&#x2F;openannotation&#x2F;core&#x2F;hasSelector&quot;,
+            &#x2F;** 
+                TODO
+                @const items.parentItemXP 
+            **&#x2F;
             parentItemXP: &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#parentItemXP&quot;
         },
         
@@ -234,15 +278,59 @@ define([
         self.fragmentBaseUri = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;fragment&#x2F;&quot;;
         self.selectorBaseUri = &quot;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;selector&#x2F;&quot;;
         
+        &#x2F;**
+            RDF predicates to objects properties used by Notebooks
+            @const notebooks
+            @type Object
+        **&#x2F;
         self.notebooks = {
-            visibility: &#x27;http:&#x2F;&#x2F;open.vocab.org&#x2F;terms&#x2F;visibility&#x27;,
-            created: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;created&#x27;,
-            creator: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;creator&#x27;,
-            creatorName: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;elements&#x2F;1.1&#x2F;creator&#x27;,
-            id: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#id&#x27;,
-            includes: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#includes&#x27;,
-            type: self.rdf_type,
+            &#x2F;** 
+                Name of the notebook
+                @const notebooks.label
+            **&#x2F;
             label: self.rdfs_label
+
+            &#x2F;** 
+                Can be public or private
+                @const notebooks.visibility
+            **&#x2F;
+            visibility: &#x27;http:&#x2F;&#x2F;open.vocab.org&#x2F;terms&#x2F;visibility&#x27;,
+
+            &#x2F;** 
+                TODO
+                @const notebooks.created
+            **&#x2F;
+            created: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;created&#x27;,
+
+            &#x2F;** 
+                Creator and owner of the notebook
+                @const notebooks.creator 
+            **&#x2F;
+            creator: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;terms&#x2F;creator&#x27;,
+
+            &#x2F;** 
+                Name of the creator and owner of the notebook
+                @const notebooks.creatorName 
+            **&#x2F;
+            creatorName: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;dc&#x2F;elements&#x2F;1.1&#x2F;creator&#x27;,
+
+            &#x2F;** 
+                Notebook&#x27;s id
+                @const notebooks.id
+            **&#x2F;
+            id: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#id&#x27;,
+
+            &#x2F;** 
+                Annotations this notebook includes
+                @const notebooks.includes
+            **&#x2F;
+            includes: &#x27;http:&#x2F;&#x2F;purl.org&#x2F;pundit&#x2F;ont&#x2F;ao#includes&#x27;,
+
+            &#x2F;** 
+                Rdf type of the notebook, see rdf_type
+                @const notebooks.type
+            **&#x2F;
+            type: self.rdf_type
         }
         
     } &#x2F;&#x2F; constructor

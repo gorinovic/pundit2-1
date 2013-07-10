@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>pundit.ns - Pundit</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="http:&#x2F;&#x2F;thepund.it&#x2F;assets&#x2F;img&#x2F;pundit_500.png" title="Pundit"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: ASK Pundit_1.99.0</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/pundit.authenticatedRequester.html">pundit.authenticatedRequester</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.baseComponent.html">pundit.baseComponent</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.Configuration.html">pundit.Configuration</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.ns.html">pundit.ns</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/pundit.html">pundit</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>pundit.ns Class</h1>
+<div class="box meta">
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l1"><code>src&#x2F;Namespace.js:1</code></a>
+        </div>
+    
+
+    
+        
+            Module: <a href="../modules/pundit.html">pundit</a>
+        
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Provides various URIs used all around Pundit, from rdf type, label, comment
+to the predicates used to describe items and notebooks etc</p>
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_items">items</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.altLabel">items.altLabel</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.description">items.description</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.image">items.image</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.isPartOf">items.isPartOf</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.label">items.label</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.pageContext">items.pageContext</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.parentItemXP">items.parentItemXP</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.prefLabel">items.prefLabel</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.selector">items.selector</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_items.type">items.type</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks">notebooks</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.created">notebooks.created</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.creator">notebooks.creator</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.creatorName">notebooks.creatorName</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.id">notebooks.id</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.includes">notebooks.includes</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.label">notebooks.label</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.type">notebooks.type</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_notebooks.visibility">notebooks.visibility</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_items" class="property item">
+    <h3 class="name"><code>items</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l88"><code>src&#x2F;Namespace.js:88</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>RDF predicates to object properties of items.
+Not present in this list: </p>
+
+<p>.value which contains the full URI</p>
+
+<p>.rdfData which can get created by a .createBucketFor* method</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.altLabel" class="property item">
+    <h3 class="name"><code>items.altLabel</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l112"><code>src&#x2F;Namespace.js:112</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Alternative labels</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.description" class="property item">
+    <h3 class="name"><code>items.description</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l118"><code>src&#x2F;Namespace.js:118</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Long description or content of a text fragment</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.image" class="property item">
+    <h3 class="name"><code>items.image</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l124"><code>src&#x2F;Namespace.js:124</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Image contained in the text fragment, or associated with the item</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.isPartOf" class="property item">
+    <h3 class="name"><code>items.isPartOf</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l144"><code>src&#x2F;Namespace.js:144</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Closest named content or container for this item</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.label" class="property item">
+    <h3 class="name"><code>items.label</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l100"><code>src&#x2F;Namespace.js:100</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Short label (usually 30-40 chars or so), see rdfs_label</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.pageContext" class="property item">
+    <h3 class="name"><code>items.pageContext</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l138"><code>src&#x2F;Namespace.js:138</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Web URL where the item has been created</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.parentItemXP" class="property item">
+    <h3 class="name"><code>items.parentItemXP</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l155"><code>src&#x2F;Namespace.js:155</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>TODO</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.prefLabel" class="property item">
+    <h3 class="name"><code>items.prefLabel</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l106"><code>src&#x2F;Namespace.js:106</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Preferred label</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.selector" class="property item">
+    <h3 class="name"><code>items.selector</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l150"><code>src&#x2F;Namespace.js:150</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>TODO</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_items.type" class="property item">
+    <h3 class="name"><code>items.type</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l132"><code>src&#x2F;Namespace.js:132</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Used for item types, see rdf_type</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks" class="property item">
+    <h3 class="name"><code>notebooks</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l185"><code>src&#x2F;Namespace.js:185</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>RDF predicates to objects properties used by Notebooks</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.created" class="property item">
+    <h3 class="name"><code>notebooks.created</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l203"><code>src&#x2F;Namespace.js:203</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>TODO</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.creator" class="property item">
+    <h3 class="name"><code>notebooks.creator</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l209"><code>src&#x2F;Namespace.js:209</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Creator and owner of the notebook</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.creatorName" class="property item">
+    <h3 class="name"><code>notebooks.creatorName</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l215"><code>src&#x2F;Namespace.js:215</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Name of the creator and owner of the notebook</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.id" class="property item">
+    <h3 class="name"><code>notebooks.id</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l221"><code>src&#x2F;Namespace.js:221</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Notebook's id</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.includes" class="property item">
+    <h3 class="name"><code>notebooks.includes</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l227"><code>src&#x2F;Namespace.js:227</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Annotations this notebook includes</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.label" class="property item">
+    <h3 class="name"><code>notebooks.label</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l191"><code>src&#x2F;Namespace.js:191</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Name of the notebook</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.type" class="property item">
+    <h3 class="name"><code>notebooks.type</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l233"><code>src&#x2F;Namespace.js:233</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Rdf type of the notebook, see rdf_type</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_notebooks.visibility" class="property item">
+    <h3 class="name"><code>notebooks.visibility</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+        <span class="flag final">final</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Namespace.js.html#l197"><code>src&#x2F;Namespace.js:197</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Can be public or private</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

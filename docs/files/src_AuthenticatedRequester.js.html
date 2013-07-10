@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: ASK Ask_0.1</em>
+            <em>API Docs for: ASK Pundit_1.99.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -44,6 +44,10 @@
                 <li><a href="..&#x2F;classes/pundit.authenticatedRequester.html">pundit.authenticatedRequester</a></li>
             
                 <li><a href="..&#x2F;classes/pundit.baseComponent.html">pundit.baseComponent</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.Configuration.html">pundit.Configuration</a></li>
+            
+                <li><a href="..&#x2F;classes/pundit.ns.html">pundit.ns</a></li>
             
             </ul>
 
@@ -129,7 +133,7 @@ define([
     
     &#x2F;&#x2F; TODO: can be removed from here and just taken from the first auth request or
     &#x2F;&#x2F; is logged in
-    redirectURL: &quot;http:&#x2F;&#x2F;metasound.dibet.univpm.it&#x2F;annotationserver&#x2F;login.jsp&quot;,
+    redirectURL: &quot;http:&#x2F;&#x2F;as.thepund.it&#x2F;annotationserver&#x2F;login.jsp&quot;,
     
     _loggedIn: false,
     _logginInAs: {},
@@ -310,7 +314,7 @@ define([
     _openLoginPopUp: function() {
         var self = this;
 
-        window.open(self.redirectURL, &#x27;loginpopup&#x27;, &#x27;left=260,top=120,width=480,height=360&#x27;);
+        window.open(self.redirectURL, &#x27;loginpopup&#x27;, &#x27;left=260,top=120,width=580,height=360&#x27;);
 
         self._setLoginState(&#x27;waiting&#x27;);
             
@@ -347,7 +351,7 @@ define([
         var self = this;
         
         var args = {
-            url: &quot;http:&#x2F;&#x2F;metasound.dibet.univpm.it&#x2F;annotationserver&#x2F;api&#x2F;users&#x2F;current&quot;,
+            url: &quot;http:&#x2F;&#x2F;as.thepund.it:8080&#x2F;annotationserver&#x2F;api&#x2F;users&#x2F;current&quot;,
             handleAs: &quot;json&quot;,
             headers: {
                 &quot;Accept&quot;:&quot;application&#x2F;json&quot;
@@ -422,7 +426,7 @@ define([
         clearTimeout(self.loginTimer);
         
         var args = {
-            url: &quot;http:&#x2F;&#x2F;metasound.dibet.univpm.it&#x2F;annotationserver&#x2F;api&#x2F;users&#x2F;logout&quot;,
+            url: &quot;http:&#x2F;&#x2F;as.thepund.it:8080&#x2F;annotationserver&#x2F;api&#x2F;users&#x2F;logout&quot;,
             handleAs: &quot;json&quot;,
             headers: {
                 &quot;Accept&quot;:&quot;application&#x2F;json&quot;

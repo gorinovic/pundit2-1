@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>pundit.authenticatedRequester - Pundit</title>
+    <title>pundit.Configuration - Pundit</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -90,7 +90,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>pundit.authenticatedRequester Class</h1>
+                        <h1>pundit.Configuration Class</h1>
 <div class="box meta">
     
 
@@ -102,7 +102,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l1"><code>src&#x2F;AuthenticatedRequester.js:1</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l20"><code>src&#x2F;Configuration.js:20</code></a>
         </div>
     
 
@@ -118,11 +118,17 @@
 
 
 <div class="box intro">
-    <p>Provides facilities to interact with the pundit server, through
-authenticated API Calls. The authentication is granted by an OpenID workflow,
-initialized here and carried on by the server. When logged in, this component
-notifies the user and executes any previously blocked request, which needed
-authentication to work.</p>
+    <p>This component deals with the various layers of Pundit 
+configuration.<br>
+These layers are: <br>
+1. component defaults <br>
+2. global Configuration defaults <br>
+3. user supplied configuration file <br>
+4. parameters passed to the component constructor <br>
+When initialized, the Configuration module will merge the levels 2 and 
+3, creating the .config field in the global pundit live object (_PUNDIT).<br>
+When a component is initialized its final .opts field will be a merge
+of all of those levels: 4 being the higher priority.<br></p>
 </div>
 
 
@@ -138,8 +144,6 @@ authentication to work.</p>
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
-        
-            <li class="api-class-tab events"><a href="#events">Events</a></li>
         
     </ul>
 
@@ -168,21 +172,7 @@ authentication to work.</p>
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_get">get</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_hideLogin">hideLogin</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_isLoggedIn">isLoggedIn</a>
+                                <a href="#method_isModuleActive">isModuleActive</a>
 
                                 
                                 
@@ -190,48 +180,6 @@ authentication to work.</p>
                         
                             <li class="index-item method inherited">
                                 <a href="#method_log">log</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_login">login</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_logout">logout</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_showLogin">showLogin</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_xDelete">xDelete</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_xPost">xPost</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_xPut">xPut</a>
 
                                 
                                 
@@ -261,34 +209,75 @@ authentication to work.</p>
                                 
                             </li>
                         
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.annotationServerBaseURL">punditConfig.annotationServerBaseURL</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.debugAllModules">punditConfig.debugAllModules</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.enableEntitiesExtraction">punditConfig.enableEntitiesExtraction</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.enableSemanticExpansion">punditConfig.enableSemanticExpansion</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.modules">punditConfig.modules</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.modules.annotators">punditConfig.modules.annotators</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.modules.selectors">punditConfig.modules.selectors</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.useBasicRelations">punditConfig.useBasicRelations</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_punditConfig.vocabularies">punditConfig.vocabularies</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
 
             
 
-            
-                <div class="index-section events">
-                    <h3>Events</h3>
-
-                    <ul class="index-list events extends">
-                        
-                            <li class="index-item event">
-                                <a href="#event_onLogin">onLogin</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item event">
-                                <a href="#event_onLogout">onLogout</a>
-
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
             
         </div>
 
@@ -297,7 +286,7 @@ authentication to work.</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_constructor" class="method item">
+                    <div id="method_constructor" class="method item inherited">
     <h3 class="name"><code>constructor</code></h3>
 
     
@@ -330,16 +319,13 @@ authentication to work.</p>
 
     <div class="meta">
         
-            <p>Inherited from
-            <a href="..&#x2F;classes&#x2F;pundit.baseComponent.html#method_constructor">
-                pundit.baseComponent
-            </a>
             
-            but overwritten in
+                <p>Inherited from
+                <a href="..&#x2F;classes&#x2F;pundit.baseComponent.html#method_constructor">pundit.baseComponent</a>:
             
         
         
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l55"><code>src&#x2F;AuthenticatedRequester.js:55</code></a>
+        <a href="..&#x2F;files&#x2F;src_BaseComponent.js.html#l48"><code>src&#x2F;BaseComponent.js:48</code></a>
         
         </p>
 
@@ -381,7 +367,7 @@ authentication to work.</p>
                                 
 
                                 <div class="param-description">
-                                    <p>wether or not to activate debug mode for this component</p>
+                                    <p>wether or not to activate debug mode for the component</p>
                                 </div>
 
                                 
@@ -389,27 +375,13 @@ authentication to work.</p>
                             
                             <li class="param">
                                 
-                                    <code class="param-name">loginTimerMS</code>
-                                    <span class="type">Number, milliseconds</span>
+                                    <code class="param-name">libName</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                                 
 
                                 <div class="param-description">
-                                    <p>Polling interval to check if the user
-completed the login workflow in the external OpenID window</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">loginAutomaticHideMS</code>
-                                    <span class="type">Number, milliseconds</span>
-                                
-
-                                <div class="param-description">
-                                    <p>Time to wait before automatically
-hide the login panel, when login has been completed.</p>
+                                    <p>component name visualized in debug messages. If not 
+assigned explicitly dojo's 'declaredClass' field will be used.</p>
                                 </div>
 
                                 
@@ -519,8 +491,8 @@ function must be called by the component when needed.</p>
 </div>
 
                 
-                    <div id="method_get" class="method item">
-    <h3 class="name"><code>get</code></h3>
+                    <div id="method_isModuleActive" class="method item">
+    <h3 class="name"><code>isModuleActive</code></h3>
 
     
         <div class="args">
@@ -528,7 +500,7 @@ function must be called by the component when needed.</p>
             
                 <li class="arg">
                     
-                        <code>options</code>
+                        <code>name</code>
                     
                 </li>
             
@@ -536,6 +508,10 @@ function must be called by the component when needed.</p>
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
     
 
     
@@ -561,7 +537,7 @@ function must be called by the component when needed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l96"><code>src&#x2F;AuthenticatedRequester.js:96</code></a>
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l421"><code>src&#x2F;Configuration.js:421</code></a>
         
         </p>
 
@@ -572,7 +548,7 @@ function must be called by the component when needed.</p>
     </div>
 
     <div class="description">
-        <p>Performs an HTTP get through an authenticated Ajax call.</p>
+        <p>Returns true if the given module name is active</p>
     </div>
 
     
@@ -583,15 +559,14 @@ function must be called by the component when needed.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">name</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>the same object one would pass to a 
-normal dojo xhr.get().</p>
+                        <p>a module name</p>
                     </div>
 
                     
@@ -602,147 +577,17 @@ normal dojo xhr.get().</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
 
-    
-</div>
-
+            <div class="returns-description">
                 
-                    <div id="method_hideLogin" class="method item">
-    <h3 class="name"><code>hideLogin</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l363"><code>src&#x2F;AuthenticatedRequester.js:363</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Hides the login modal dialog</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_isLoggedIn" class="method item">
-    <h3 class="name"><code>isLoggedIn</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
                     
-                        <code>f</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
                     
-                </li>
-            
-            </ul><span class="paren">)</span>
+                
+            </div>
         </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l248"><code>src&#x2F;AuthenticatedRequester.js:248</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Checks with the server if an user is logged in. Will call
-the given callback passing true or false</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">f</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Callback to be called when the check is done</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
     
 
     
@@ -849,434 +694,6 @@ present) in a debug div appended to the document.</p>
 </div>
 
                 
-                    <div id="method_login" class="method item">
-    <h3 class="name"><code>login</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l304"><code>src&#x2F;AuthenticatedRequester.js:304</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>If the user is logged, does nothing. If not, starts the
-login procedures, opening the modal login dialog first</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_logout" class="method item">
-    <h3 class="name"><code>logout</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l322"><code>src&#x2F;AuthenticatedRequester.js:322</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Logs out any logged in user by calling the relative
-server API</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_showLogin" class="method item">
-    <h3 class="name"><code>showLogin</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l353"><code>src&#x2F;AuthenticatedRequester.js:353</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Shows the login modal dialog</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_xDelete" class="method item">
-    <h3 class="name"><code>xDelete</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>options</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l180"><code>src&#x2F;AuthenticatedRequester.js:180</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Performs an HTTP delete through an authenticated Ajax call.</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the same object one would pass to a 
-normal dojo xhrDelete().</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_xPost" class="method item">
-    <h3 class="name"><code>xPost</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>options</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l160"><code>src&#x2F;AuthenticatedRequester.js:160</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Performs an HTTP post through an authenticated Ajax call.</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the same object one would pass to a 
-normal dojo xhrPost().</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method_xPut" class="method item">
-    <h3 class="name"><code>xPut</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>options</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l170"><code>src&#x2F;AuthenticatedRequester.js:170</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Performs an HTTP put through an authenticated Ajax call.</p>
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">options</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>the same object one would pass to a 
-normal dojo xhrPut().</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-
-    
-</div>
-
-                
             </div>
         
 
@@ -1371,19 +788,9 @@ normal dojo xhrPut().</p>
 </div>
 
                 
-            </div>
-        
-
-        
-
-        
-            <div id="events" class="api-class-tabpanel">
-                <h2 class="off-left">Events</h2>
-
-                
-                    <div id="event_onLogin" class="events item">
-    <h3 class="name"><code>onLogin</code></h3>
-    <span class="type"></span>
+                    <div id="property_punditConfig.annotationServerBaseURL" class="property item">
+    <h3 class="name"><code>punditConfig.annotationServerBaseURL</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
 
     
 
@@ -1404,7 +811,7 @@ normal dojo xhrPut().</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l70"><code>src&#x2F;AuthenticatedRequester.js:70</code></a>
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l50"><code>src&#x2F;Configuration.js:50</code></a>
         
         </p>
 
@@ -1414,44 +821,23 @@ normal dojo xhrPut().</p>
     </div>
 
     <div class="description">
-        <p>Called when the user succesfully completes the OpenID 
-authentication workflow.</p>
+        <p>Absolute base URL of the Pundit server side APIs, ending
+with /</p>
     </div>
 
     
-        <div class="params">
-            <h4>Event Payload:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">f(data)</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>function to be called.<br>
-data is the json object coming from the server on succesfull login.</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
+        <p><strong>Default:</strong> http:&#x2F;&#x2F;metasound.dibet.univpm.it&#x2F;annotationserver&#x2F;</p>
     
 
+    
 
     
 </div>
 
                 
-                    <div id="event_onLogout" class="events item">
-    <h3 class="name"><code>onLogout</code></h3>
-    <span class="type"></span>
+                    <div id="property_punditConfig.debugAllModules" class="property item">
+    <h3 class="name"><code>punditConfig.debugAllModules</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
 
     
 
@@ -1472,7 +858,7 @@ data is the json object coming from the server on succesfull login.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;src_AuthenticatedRequester.js.html#l78"><code>src&#x2F;AuthenticatedRequester.js:78</code></a>
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l59"><code>src&#x2F;Configuration.js:59</code></a>
         
         </p>
 
@@ -1482,41 +868,350 @@ data is the json object coming from the server on succesfull login.</p>
     </div>
 
     <div class="description">
-        <p>Called when the user succesfully logs out.</p>
+        <p>Activates/deactivates debug mode for every component</p>
     </div>
 
     
-        <div class="params">
-            <h4>Event Payload:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">f(data)</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>function to be called.<br>
-data is the json object coming from the server on succesfull logout.</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
+        <p><strong>Default:</strong> false</p>
     
 
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.enableEntitiesExtraction" class="property item">
+    <h3 class="name"><code>punditConfig.enableEntitiesExtraction</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l75"><code>src&#x2F;Configuration.js:75</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Enables/disables the automatic entitities extraction from text in the page</p>
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.enableSemanticExpansion" class="property item">
+    <h3 class="name"><code>punditConfig.enableSemanticExpansion</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l67"><code>src&#x2F;Configuration.js:67</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Enables/disables the link to LodLive for exploring Linked Data around items</p>
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.modules" class="property item">
+    <h3 class="name"><code>punditConfig.modules</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l273"><code>src&#x2F;Configuration.js:273</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Configuration for various Pundit optional modules</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.modules.annotators" class="property item">
+    <h3 class="name"><code>punditConfig.modules.annotators</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l280"><code>src&#x2F;Configuration.js:280</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Configuration for Pundit annotators: components who
+deal (read, write, visualize etc) with various type of items used
+into annotations, for example text fragments, image fragments etc.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.modules.selectors" class="property item">
+    <h3 class="name"><code>punditConfig.modules.selectors</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l294"><code>src&#x2F;Configuration.js:294</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Configuration for Pundit selectors: components who
+retrieve items from remote sources like Freebase, Wordnet, Europeana
+etc. Each children should be named after a Selector found in src/selectors
+omitting the ending part "Selector". Each object must contain the
+properties name (string), label (string) and active (boolean). Moreover
+it can contain selector-specific configuration options, like europeanaKey
+or limit or keyInputTimerLength. See each selector docs for more info.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.useBasicRelations" class="property item">
+    <h3 class="name"><code>punditConfig.useBasicRelations</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l95"><code>src&#x2F;Configuration.js:95</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Loads Pundit's basic relations</p>
+    </div>
+
+    
+        <p><strong>Default:</strong> true</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_punditConfig.vocabularies" class="property item">
+    <h3 class="name"><code>punditConfig.vocabularies</code></h3>
+    <span class="type">Array or URLs</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;src_Configuration.js.html#l84"><code>src&#x2F;Configuration.js:84</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Specifies vocaularies that will be available to Pundit users. 
+Vocabularies have a unique name and a description. They can be of different
+types: taxonomy (defines a hierarchy of terms), relations (defines a list 
+of relations with domain and ranges). Each vocabulary definition is a JSONP
+file available on the Web and is loaded by resolving an absolute URL.</p>
+    </div>
+
+    
+
+    
 
     
 </div>
 
                 
             </div>
+        
+
+        
+
         
     </div>
 </div>

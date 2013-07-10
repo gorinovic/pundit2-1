@@ -1,8 +1,10 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "pundit.Configuration",
         "pundit.authenticatedRequester",
-        "pundit.baseComponent"
+        "pundit.baseComponent",
+        "pundit.ns"
     ],
     "modules": [
         "pundit"

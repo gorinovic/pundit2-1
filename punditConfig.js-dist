@@ -1,10 +1,12 @@
 dojoConfig = {
     isDebug: 1,
     parseOnLoad: true,
-    
+    selectorEngine: "acme",
+    async: true,
     has: {
         "dojo-debug-messages": true
     },
+
     packages: [
         { name: 'pundit', location: '/pundit2/src' },
         { name: 'cov', location: '/pundit2/cov' },

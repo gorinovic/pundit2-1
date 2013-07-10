@@ -56,10 +56,11 @@
 
             require([
                 'dojo/on',
+                'dojo/query',
                 'myTest/test',
                 'dojox/highlight',
                 'dojox/highlight/languages/javascript'
-            ], function(on) {
+            ], function(on, query) {
                 
                 Mocha.utils.highlightTags = function() {};
 
@@ -72,7 +73,7 @@
                         node.style.display = "none";
                     });
                     
-                    on(dojo.byId('mocha'), on.selector('h2', 'click'), function(e) {
+                    query('#mocha').on('h2:click', function(e) {
                         var d = e.target.nextSibling.style.display;
                         if (d === "none") {
                             dojo.query("pre", e.target.parentNode).forEach(function(node){
@@ -84,7 +85,7 @@
                             });
                         }
                     });
-                    
+                                        
                 });
                 
             });

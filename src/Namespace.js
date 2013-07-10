@@ -49,7 +49,7 @@ define(["dojo/_base/declare"], function(declare) {
         self.asNbAnnList          = self.asApi + "notebooks/{id}/annotations/metadata";
         self.asNotebooksMeta      = self.asApi + "notebooks/{id}/metadata";
         self.asAnnGraph           = self.asApi + "annotations/{id}/graph";
-        self.asAnnItems           = self.asApi + "annotations/{id}/items"
+        self.asAnnItems           = self.asApi + "annotations/{id}/items";
         self.asNotebooks          = self.asApi + "notebooks";
         self.asNotebookId         = self.asApi + "notebooks/{id}";
         self.asNotebooksGraph     = self.asApi + "notebooks/graph/";
@@ -60,11 +60,11 @@ define(["dojo/_base/declare"], function(declare) {
         self.asOpenNbAnnList      = self.asApi + "open/notebooks/{id}/annotations/metadata";
         self.asOpenNotebooksMeta  = self.asApi + "open/notebooks/{id}/metadata";
         self.asOpenAnnGraph       = self.asApi + "open/annotations/{id}/graph";
-        self.asOpenAnnItems       = self.asApi + "open/annotations/{id}/items"
+        self.asOpenAnnItems       = self.asApi + "open/annotations/{id}/items";
 
         self.asPublicNotebooks    = self.asApi + "open/notebooks/public/";
 
-        self.asCreateAnnotation   = self.asApi + "notebooks/{id}?context={context}"
+        self.asCreateAnnotation   = self.asApi + "notebooks/{id}?context={context}";
 
         self.asAnnotations        = self.asApi + "annotations/";
         self.asMetadataSearch     = self.asApi + "annotations/metadata/search";
@@ -192,7 +192,7 @@ define(["dojo/_base/declare"], function(declare) {
                 Name of the notebook
                 @const notebooks.label
             **/
-            label: self.rdfs_label
+            label: self.rdfs_label,
 
             /** 
                 Can be public or private

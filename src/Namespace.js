@@ -4,7 +4,7 @@
     @class pundit.ns
 **/
 define([
-    "dojo/_base/declare", 
+    "dojo/_base/declare",
     "dojo/_base/config"
 ], function(declare, config) {
     return declare("pundit.ns", [], {
@@ -17,17 +17,20 @@ define([
     constructor: function() {
         var self = this;
         
-        self.rdf_type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-        self.rdf_value = "http://www.w3.org/1999/02/22-rdf-syntax-ns#value";
-        self.rdf_property = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
-        self.rdf_XMLLiteral = "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral";
+        self.rdf = {};
+        self.rdf.type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+        self.rdf.value = "http://www.w3.org/1999/02/22-rdf-syntax-ns#value";
+        self.rdf.property = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
+        self.rdf.XMLLiteral = "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral";
         
-        self.rdfs_label = "http://www.w3.org/2000/01/rdf-schema#label";
-        self.rdfs_comment = "http://www.w3.org/2000/01/rdf-schema#comment";
-        self.rdfs_resource = "http://www.w3.org/2000/01/rdf-schema#Resource";
-        self.rdfs_literal = "http://www.w3.org/2000/01/rdf-schema#Literal";
-        self.rdfs_seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
+        self.rdfs = {};
+        self.rdfs.label = "http://www.w3.org/2000/01/rdf-schema#label";
+        self.rdfs.comment = "http://www.w3.org/2000/01/rdf-schema#comment";
+        self.rdfs.resource = "http://www.w3.org/2000/01/rdf-schema#Resource";
+        self.rdfs.literal = "http://www.w3.org/2000/01/rdf-schema#Literal";
+        self.rdfs.seeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
         
+        /*
         // Types used to denote a webpage, a text fragment, an image, an annotation
         self.page = "http://schema.org/WebPage";
         self.image = "http://xmlns.com/foaf/0.1/Image";
@@ -44,12 +47,13 @@ define([
         self.pundit_isIncludedIn = "http://purl.org/pundit/ont/ao#isIncludedIn";
 
         self.pundit_VocabCategory = "http://purl.org/pundit/vocab/category";
+        */
         
-        // Annotation server constants
         // Annotation server constants
         self.as                   = config.pundit.annotationServer;
         self.asApi                = self.as + "api/";
-
+        
+        /*
         self.asNbAnnList          = self.asApi + "notebooks/{id}/annotations/metadata";
         self.asNotebooksMeta      = self.asApi + "notebooks/{id}/metadata";
         self.asAnnGraph           = self.asApi + "annotations/{id}/graph";
@@ -75,20 +79,21 @@ define([
 
         self.asStorage            = self.asApi + "services/preferences/";
         self.asVocabProxy         = self.asApi + "services/proxy";
-
+        */
+        
         self.asUsers              = self.asApi + "users/";
         self.asUsersCurrent       = self.asApi + "users/current";
         self.asUsersLogout        = self.asApi + "users/logout";
 
-        self.lodLiveURL  = "http://thepund.it/lodlive/app_en.html";
-
+        /*
+        self.lodLiveURL = "http://thepund.it/lodlive/app_en.html";
         self.notebooksNamespace = "http://swickynotes.org/notebook/resource/";
         self.usersNamespace = "http://swickynotes.org/notebook/resource/";
         
-        // TODO x marco: move this into the component using these urls, as configurable parameters
         self.dbpediaSpotlightAnnotate = "http://spotlight.dbpedia.org/rest/annotate?text=";
         self.dbpediaKeywordSearch = "http://lookup.dbpedia.org/api/search.asmx/KeywordSearch";
- 
+        */
+        
         /**
             RDF predicates to object properties of items.
             Not present in this list: 
@@ -102,10 +107,10 @@ define([
         self.items = {
 
             /** 
-                Short label (usually 30-40 chars or so), see rdfs_label
+                Short label (usually 30-40 chars or so), see rdfs.label
                 @const items.label 
             **/
-            label: self.rdfs_label,
+            label: self.rdfs.label,
 
             /** 
                 Preferred label
@@ -134,10 +139,10 @@ define([
             // TODO: the items have an rdfType field which contains the types, call
             //       this rdfTypes as well?
             /** 
-                Used for item types, see rdf_type
+                Used for item types, see rdf.type
                 @const items.type 
             **/
-            type: self.rdf_type,
+            type: self.rdf.type,
 
             /** 
                 Web URL where the item has been created
@@ -161,13 +166,13 @@ define([
                 @const items.parentItemXP 
             **/
             parentItemXP: "http://purl.org/pundit/ont/ao#parentItemXP"
-        },
+        };
         
         // DEBUG: this has to be moved to each annotator, not in the general conf
         self.fragments = {
             image: "http://purl.org/pundit/ont/ao#fragment-image",
             text: "http://purl.org/pundit/ont/ao#fragment-text"
-        },
+        };
         
         
         self.selectors = {
@@ -181,7 +186,7 @@ define([
                 label: "Rectangular Selector",
                 description: "A polygonal selection described by the coordinates of the top left vertex, width and height normalized according to the resource image and width"
             }
-        }
+        };
         
         self.fragmentBaseUri = "http://purl.org/pundit/fragment/";
         self.selectorBaseUri = "http://purl.org/pundit/selector/";
@@ -196,7 +201,7 @@ define([
                 Name of the notebook
                 @const notebooks.label
             **/
-            label: self.rdfs_label,
+            label: self.rdfs.label,
 
             /** 
                 Can be public or private
@@ -238,8 +243,8 @@ define([
                 Rdf type of the notebook, see rdf_type
                 @const notebooks.type
             **/
-            type: self.rdf_type
-        }
+            type: self.rdf.type
+        };
         
     } // constructor
 

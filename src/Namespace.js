@@ -7,7 +7,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/config"
 ], function(declare, config) {
-    return declare("pundit.ns", [], {
+    return declare("pundit.Namespace", [], {
 
     defaultOpts: {
         debug: false,

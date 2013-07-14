@@ -4,7 +4,27 @@ define(["pundit/BaseComponent", "myTest/TestExtendedBaseComponent"], function(Ba
         var comp; 
         
         setup(function() {
+            delete _PUNDIT;
             comp = new BaseComponent();
+        });
+
+        test('No _PUNDIT before, _PUNDIT after!', function() {
+            delete _PUNDIT;
+            expect(typeof(_PUNDIT) === 'undefined').equals(true);
+            var foo = new BaseComponent();
+            expect(_PUNDIT).to.be.a("object");
+        });
+
+        test('_PUNDIT.ns: pundit\'s namespace object', function() {
+            expect(_PUNDIT.ns).to.be.a("object");
+            expect(_PUNDIT.ns.rdf).to.be.a("object");
+            expect(_PUNDIT.ns.rdf.type).equal("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+            expect(_PUNDIT.ns.rdfs).to.be.a("object");
+            expect(_PUNDIT.ns.items).to.be.a("object");
+            expect(_PUNDIT.ns.items.label).equal(_PUNDIT.ns.rdfs.label);
+            expect(_PUNDIT.ns.notebooks).to.be.a("object");
+            expect(_PUNDIT.ns.as).to.be.a("string");
+            expect(_PUNDIT.ns.asApi).to.be.a("string");
         });
 
         test('Well formed BaseComponent with defaults', function() {
@@ -24,6 +44,13 @@ define(["pundit/BaseComponent", "myTest/TestExtendedBaseComponent"], function(Ba
             expect(comp1.opts).to.be.a("object");
             expect(comp1.opts.debug).equal(false);
             expect(comp1.opts.libName).equal(compName);
+        });
+
+        test('Extended BaseComponent creates _PUNDIT object', function() {
+            delete _PUNDIT;
+            expect(typeof(_PUNDIT) === 'undefined').equals(true);
+            var compE0 = new TestExtendedBaseComponent();
+            expect(_PUNDIT).to.be.a("object");
         });
 
         test('Extended BaseComponent with defaults', function() {

@@ -7,6 +7,7 @@ define([
         var ar;
                 
         setup(function() {
+            delete _PUNDIT;
             if (!ar) {
                 ar = new AuthenticatedRequester({showLoginModalOnFail: false});
                 ar.placeAt(query('body')[0]);

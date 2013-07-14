@@ -19,12 +19,14 @@
 **/
 define([
         "dojo/query",
-        "dojo/_base/declare"
+        "dojo/_base/declare",
+        "pundit/Namespace"
     ],
     
     function(
         query,
-        declare
+        declare,
+        Namespace
     ) {
 
     return declare("pundit.BaseComponent", [], {
@@ -56,8 +58,7 @@ define([
     * assigned explicitly dojo's 'declaredClass' field will be used.
     */
     constructor: function(options) {
-        var self = this,
-            i;
+        var self = this, i;
 
         // If the class extending us doesnt have an .opts field, create it
         if (typeof(self.opts) === 'undefined') { self.opts = {}; }
@@ -79,10 +80,9 @@ define([
             _PUNDIT = {};
             /*jshint +W020*/
         }
+        
         if (typeof(_PUNDIT.ns) === 'undefined') {
-            require(["pundit/NameSpace"], function(PunditNS) {
-                _PUNDIT.ns = new PunditNS();
-            });
+            _PUNDIT.ns = new Namespace();
         }
         
         // If _PUNDIT, _PUNDIT.config and _PUNDIT.config.modules.THISMODULENAME are
@@ -91,12 +91,10 @@ define([
             var configOpts = _PUNDIT.config.modules[self.declaredClass];
             for (i in configOpts) { self.opts[i] = configOpts[i]; }
         }
-
+        
         // Finally overwrite any given field coming from options parameter
         for (i in options) { self.opts[i] = options[i]; }
-        
         self.log('BaseConstructor built opts for '+self.declaredClass);
-
     }, // constructor
 
     /**
@@ -168,11 +166,11 @@ define([
         if (typeof(punditConfig) !== 'undefined' && punditConfig.debugAllModules === true) {
             foo = true;
         }
-
+        
         if (foo === false) { return false; }
         
         var libName = (this.opts.libName !== "") ? this.opts.libName : this.declaredClass;
-        if (typeof console === "undefined" || true) {
+        if (typeof console === "undefined") {
             if (query('#debug_foo').length === 0) {
                 query("body").append(
                     "<div id='debug_foo' style='position: absolute; overflow-y: auto; \

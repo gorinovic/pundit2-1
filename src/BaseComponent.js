@@ -18,10 +18,12 @@
     @param options {object} See object properties
 **/
 define([
+        "dojo/query",
         "dojo/_base/declare"
-    ], 
-        
+    ],
+    
     function(
+        query,
         declare
     ) {
 
@@ -54,21 +56,28 @@ define([
     * assigned explicitly dojo's 'declaredClass' field will be used.
     */
     constructor: function(options) {
-        var self = this, 
+        var self = this,
             i;
 
         // If the class extending us doesnt have an .opts field, create it
-        if (typeof(self.opts) === 'undefined')
-            self.opts = {};
+        if (typeof(self.opts) === 'undefined') { self.opts = {}; }
 
         // Copy in the baseComponent defaults, if the given .opts doesnt have it
-        for (i in self.defaultOpts) 
-            if (typeof(self.opts[i]) === 'undefined')
+        for (i in self.defaultOpts) {
+            if (typeof(self.opts[i]) === 'undefined') {
                 self.opts[i] = self.defaultOpts[i];
+            }
+        }
+
+        // TODO: rename to PUNDIT without _ ? .. why not?
 
         // If there's no _PUNDIT, or there's no namespace, create it
+        // A jshint rule enforces that this is the only place where it is 
+        // allowed to create pundit's global object
         if (typeof(_PUNDIT) === 'undefined') {
+            /*jshint -W020*/
             _PUNDIT = {};
+            /*jshint +W020*/
         }
         if (typeof(_PUNDIT.ns) === 'undefined') {
             require(["pundit/NameSpace"], function(PunditNS) {
@@ -80,13 +89,11 @@ define([
         // defined, get that configuration and initialize the component
         if (typeof(_PUNDIT.config) !== 'undefined' && typeof(_PUNDIT.config.modules[self.declaredClass]) !== 'undefined') {
             var configOpts = _PUNDIT.config.modules[self.declaredClass];
-            for (i in configOpts) 
-                self.opts[i] = configOpts[i];
+            for (i in configOpts) { self.opts[i] = configOpts[i]; }
         }
 
         // Finally overwrite any given field coming from options parameter
-        for (i in options) 
-            self.opts[i] = options[i];
+        for (i in options) { self.opts[i] = options[i]; }
         
         self.log('BaseConstructor built opts for '+self.declaredClass);
 
@@ -104,41 +111,45 @@ define([
     * @param names {string or array of strings} Names of the callbacks to be created.
     */
     createCallback: function(name) {
-        var self = this;
+        var self = this,
+            addCB = function(cbName) {
+                return function(f) {
+                    if (typeof(f) === 'function') {
+                        self[cbName].push(f);
+                    }
+                };
+            },
+            addFire = function(cbName) {
+                return function() {
+                    for (var i = self[cbName].length; i--;) {
+                        self[cbName][i].apply(self, arguments);
+                    }
+                };
+            };
 
         // If it's not an array already, create one
-        if (typeof(name) === 'string')
-            name = [name];
+        if (typeof(name) === 'string') { name = [name]; }
+
 
         for (var n = name.length; n--;) {
 
-            var current_name = name[n].substr(0,1).toUpperCase() + name[n].substr(1),
-                callbacksArrayName = 'on' + current_name + 'Callbacks',
-                callbacksName = 'on' + current_name,
-                callbacksFireName = 'fireOn' + current_name;
+            var currentName = name[n].substr(0,1).toUpperCase() + name[n].substr(1),
+                callbacksArrayName = 'on' + currentName + 'Callbacks',
+                callbacksName = 'on' + currentName,
+                callbacksFireName = 'fireOn' + currentName;
 
-            if (typeof(self[callbacksArrayName]) === 'undefined')
+            if (typeof(self[callbacksArrayName]) === 'undefined') {
                 self[callbacksArrayName] = [];
+            }
 
             // The onNAME method adds the passed in function among
             // the callbacks for that NAME
-            self[callbacksName] = (function(cb_name) {
-                return function(f) {
-                    if (typeof(f) === 'function')
-                        self[cb_name].push(f);
-                }
-            })(callbacksArrayName);
+            self[callbacksName] = addCB(callbacksArrayName);
 
             // the fireOnNAME function will take the arguments
             // passed in, and call each of the registered callbacks
             // with those same parameters
-            self[callbacksFireName] = (function(cb_name) {
-                return function() {
-                    //for (var i in self[cb_name]) 
-                    for (var i = self[cb_name].length; i--;) 
-                        self[cb_name][i].apply(self, arguments);
-                }
-            })(callbacksArrayName);
+            self[callbacksFireName] = addFire(callbacksArrayName);
 
         } // for n in name
     }, // createCallback
@@ -154,19 +165,29 @@ define([
         var foo = this.opts.debug;
         
         // If there's an user supplied object and it says not to log, dont log.
-        if (typeof(punditConfig) !== 'undefined' && punditConfig.debugAllModules === true)
+        if (typeof(punditConfig) !== 'undefined' && punditConfig.debugAllModules === true) {
             foo = true;
+        }
 
-        if (foo === false) return false;
+        if (foo === false) { return false; }
         
-        var lib_name = (this.opts.libName !== "") ? this.opts.libName : this.declaredClass;
-        if (typeof console === "undefined") {
-            if (!dojo.query('#debug_foo'))
-                $("body").append("<div id='debug_foo' style=' border: 3px solid yellow; font-size: 0.9em;'></div>");
-            dojo.query("#debug_foo").append("<div>#"+lib_name+"# "+w+"</div>");
+        var libName = (this.opts.libName !== "") ? this.opts.libName : this.declaredClass;
+        if (typeof console === "undefined" || true) {
+            if (query('#debug_foo').length === 0) {
+                query("body").append(
+                    "<div id='debug_foo' style='position: absolute; overflow-y: auto; \
+                     max-height: 300px; bottom: 0px; right: 0px; padding: 5px; border: 1px solid #666; \
+                     font-size: 0.9em;'>Pundit debug:</div>"
+                );
+            }
+            query("#debug_foo").append("<div>#"+libName+"# "+w+"</div>");
             return true;
         } else {
-            console.log('#'+lib_name+'# '+w);
+            // This is the only place where jshint should not complain about
+            // a global use of console
+            /* global console: false */
+            console.log('#'+libName+'# '+w);
+            /* global console: true */
             return true;
         }
     } // log()

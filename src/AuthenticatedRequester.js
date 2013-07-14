@@ -20,10 +20,10 @@ define([
         "bootstrap/Modal",
         "dojo/text!pundit/tmpl/PunditLoginModalTemplate.html",
 
-        "dijit/_WidgetBase", 
+        "dijit/_WidgetBase",
         "dijit/_TemplatedMixin"
-    ], 
-        
+    ],
+
     function(
         on, declare, parser, xhr, query, domClass, registry,
         BaseComponent, BModal, LoginModalTemplate,
@@ -35,7 +35,7 @@ define([
     // TODO: GO MUSTACHE
     templateString: LoginModalTemplate,
         
-    _loggedIn: false,
+_loggedIn: false,
     _logginInAs: {},
     
     HTTP_ERROR_FORBIDDEN: 403,
@@ -59,7 +59,7 @@ define([
     * @param options.loginAutomaticHideMS {number, milliseconds} Time to wait before automatically
     * hide the login panel, when login has been completed.
     */
-    constructor: function(options) {
+    constructor: function() {
         var self = this;
         
         self.inherited(arguments);
@@ -95,7 +95,7 @@ define([
         parser.parse();
         self.modal = registry.byId('pundit-login-modal');
         self._initLoginDialog();
-        self.log('Started up.')
+        self.log('Started up.');
     },
 
     /**
@@ -117,11 +117,11 @@ define([
             
         // create a new stub object, exposing a then() member, 
         // who just saves the functions in the stub object itself
-        ref.then = function(f, e){ 
-            this.orig_then = f;
-            this.orig_error = e;
+        ref.then = function(f, e){
+            this.origThen = f;
+            this.origTrror = e;
             return this;
-        }; 
+        };
 
         
         // TODO: more methods to stub? 
@@ -131,26 +131,25 @@ define([
         // a login needed, show the login window, otherwise
         // we're authenticated with the server already, pass it on
         // TODO: deal with error: r, e
-        foo.then(function(r){ 
+        foo.then(function(r){
             if (r && typeof(r.redirectTo) !== "undefined") {
                 // Save the request, along with the object which
                 // will store any future .then() calls on our
                 // fake object
                 self.blockedRequests.push({
                     ref: ref,
-                    url: url, 
+                    url: url,
                     params: callParams
                 });
                 self.redirectURL = r.redirectTo;
                 self.showLogin();
             } else {
                 // TODO: deal with error: r, e
-                ref.orig_then(r);
+                ref.origThen(r);
             }
             
         }, function(r, e, x) {
-            if (typeof(ref.orig_error) === "function") 
-                ref.orig_error(r, e, x);
+            if (typeof(ref.origError) === "function") { ref.origError(r, e, x); }
         });
 
         return ref;
@@ -207,12 +206,12 @@ define([
             self._openLoginPopUp();
         });
         
-        query(self.domNode).on('#pundit-login-close-button:click', function() { 
+        query(self.domNode).on('#pundit-login-close-button:click', function() {
             self.log('Closing the login modal');
             self.hideLogin();
         });
 
-        query(self.domNode).on('#pundit-logout-button:click', function() { 
+        query(self.domNode).on('#pundit-logout-button:click', function() {
             self.log('Logging out from modal');
             self.logout();
         });
@@ -220,8 +219,7 @@ define([
         // Clear the _checklogin timeout if the modal gets closed
         // TODO: doesnt work?
         self.modal.on('hidden', function() {
-            if (!self._loggedIn)
-                self._setLoginState('off');
+            if (!self._loggedIn) { self._setLoginState('off'); }
             clearTimeout(self.loginTimer);
             self.log('Closed the login modal');
         });
@@ -254,7 +252,7 @@ define([
         self.loginTimer = setTimeout(function() {
             self.log('Not logged in.');
             self.isLoggedIn(function(b) {
-                if (!b) self._checkLogin();
+                if (!b) { self._checkLogin(); }
             });
         }, self.opts.loginTimerMS);
         
@@ -277,18 +275,19 @@ define([
             },
             load: function(data) {
                 return self._handleLoginLoad(data, f);
-            }, 
+            },
             error: function(error) {
                 return self._handleLoginError(error, f);
             }
-        }
+        };
         self._oldGet(args);
 
     }, // isLoggedIn()
 
     _handleLoginError: function(error, f) {
+        var self = this;
         self.log('Error loading current login state from server..');
-        if (typeof(f) === 'function') f(false, error);
+        if (typeof(f) === 'function') { f(false, error); }
         return false;
     },
 
@@ -296,24 +295,25 @@ define([
         var self = this;
         
         // If the json is not what we expect, normalize it a bit
-        if (typeof(data) === 'undefined' || typeof(data.loginStatus) === 'undefined') { 
+        if (typeof(data) === 'undefined' || typeof(data.loginStatus) === 'undefined') {
             data = { loginStatus: 0 };
                     
         // If we see a .loginServer field: save it as redirectURL
-        } else if (typeof(data.loginServer) !== "undefined")
+        } else if (typeof(data.loginServer) !== "undefined") {
             self.redirectURL = data.loginServer;
+        }
 
-        // First time we see we're logged: fire the onLogin(), modify 
+        // First time we see we're logged: fire the onLogin(), modify
         // the modal content etc. Same for logout.
         if (data.loginStatus === 1) {
-            if (self._loggedIn === false) self._afterLogin(data);
-            if (typeof(f) === 'function') f(true, data);
+            if (self._loggedIn === false) { self._afterLogin(data); }
+            if (typeof(f) === 'function') { f(true, data); }
         } else {
-            if (self._loggedIn === true) self._afterLogout();
-            if (typeof(f) === 'function') f(false, data);
+            if (self._loggedIn === true) { self._afterLogout(); }
+            if (typeof(f) === 'function') { f(false, data); }
         }
         return false;
-    }, 
+    },
 
 
     /**
@@ -326,8 +326,8 @@ define([
         
         // If we're logged in already, do nothing
         self.isLoggedIn(function(b) {
-            if (b) return;
-            self.log('Login() opening the login window')
+            if (b) { return; }
+            self.log('Login() opening the login window');
             self._setLoginState('off');
             self.showLogin();
         });
@@ -350,16 +350,15 @@ define([
                 "Accept":"application/json"
             },
             load: function(data) {
-                var msg;
                 if (typeof(data) !== 'undefined' && typeof(data.logout) !== 'undefined') {
-                    data.msg = (data.logout == 1) ? 'Logged out succesfully' : 'You werent logged in.. and you still arent.';
+                    data.msg = (data.logout === 1) ? 'Logged out succesfully' : 'You werent logged in.. and you still arent.';
 
-                    if (typeof(f) === 'function') f(data);
-                    if (self._loggedIn === true) self._afterLogout(data);
+                    if (typeof(f) === 'function') { f(data); }
+                    if (self._loggedIn === true) { self._afterLogout(data); }
                 }
             },
-            error: function(error) {}
-        }
+            error: function() {}
+        };
 
         self._oldGet(args);
     },
@@ -383,10 +382,9 @@ define([
       * @description Hides the login modal dialog
       */
     hideLogin: function() {
-        if (query('#pundit-login-modal').length > 0)
-            if (domClass.contains('pundit-login-modal', 'in')) {
-                registry.byId('pundit-login-modal').hide();
-            }
+        if (query('#pundit-login-modal').length > 0 && domClass.contains('pundit-login-modal', 'in')) {
+            registry.byId('pundit-login-modal').hide();
+        }
     },
 
     // Automatically called when the login happens
@@ -408,12 +406,13 @@ define([
         for (var i = self.blockedRequests.length; i--;) {
             var foo = self.blockedRequests[i];
             self.get(foo.url, foo.params)
-                .then(foo.ref.orig_then, foo.ref.orig_error);
+                .then(foo.ref.origThen, foo.ref.origError);
         }
       
         // Hide the modal, if open
-        if (self.modal && self.modal.isShown)
+        if (self.modal && self.modal.isShown) {
             setTimeout(function() { self.hideLogin(); }, self.opts.loginAutomaticHideMS);
+        }
 
         self.fireOnLogin(data);
         
@@ -439,21 +438,21 @@ define([
             wrappedParams = {
                 'withCredentials': true
             },
-            key;
-
-        for (key in originalCallParams) 
-            if (key === "load") {
-                wrappedParams[key] = function(r) {
-                    if (r && typeof(r.redirectTo) !== "undefined") {
-                        self.blockedRequests.push(wrappedParams);
-                        self.redirectURL = r.redirectTo;
-                        if (self.opts.showLoginModalOnFail)
-                            self.showLogin();
-                    } else 
-                        originalCallParams.load(r);
+            key,
+            loadFun = function(r) {
+                if (r && typeof(r.redirectTo) !== "undefined") {
+                    self.blockedRequests.push(wrappedParams);
+                    self.redirectURL = r.redirectTo;
+                    if (self.opts.showLoginModalOnFail) { self.showLogin(); }
+                } else {
+                    originalCallParams.load(r);
                 }
-            } else
-                wrappedParams[key] = originalCallParams[key];
+            };
+            
+        // Copy every field over, overwrite the .load
+        for (key in originalCallParams) {
+            wrappedParams[key] = (key === "load") ? loadFun : originalCallParams[key];
+        }
 
         return wrappedParams;
     }

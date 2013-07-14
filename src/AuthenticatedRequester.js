@@ -12,33 +12,29 @@ define([
         "dojo/_base/declare",
         "dojo/parser",
         "dojo/request/xhr",
+        "dojo/query",
+        "dojo/dom-class",
+        "dijit/registry",
+        
         "pundit/BaseComponent",
         "bootstrap/Modal",
         "dojo/text!pundit/tmpl/PunditLoginModalTemplate.html",
+
         "dijit/_WidgetBase", 
         "dijit/_TemplatedMixin"
     ], 
         
     function(
-        on,
-        declare, 
-        parser,
-        xhr,
-        BaseComponent,
-        BModal,
-        LoginModalTemplate,
-        _WidgetBase,
-        _TemplatedMixin
+        on, declare, parser, xhr, query, domClass, registry,
+        BaseComponent, BModal, LoginModalTemplate,
+        _WidgetBase, _TemplatedMixin
     ) {
 
     return declare("pundit.AuthenticatedRequester", [BaseComponent, _WidgetBase, _TemplatedMixin], {
 
+    // TODO: GO MUSTACHE
     templateString: LoginModalTemplate,
-    
-    // TODO: can be removed from here and just taken from the first auth request or
-    // is logged in
-    redirectURL: "http://as.thepund.it/annotationserver/login.jsp",
-    
+        
     _loggedIn: false,
     _logginInAs: {},
     
@@ -47,7 +43,8 @@ define([
     
     opts: {
         loginTimerMS: 500,
-        loginAutomaticHideMS: 2000
+        loginAutomaticHideMS: 2000,
+        showLoginModalOnFail: true
     },
 
     blockedRequests: [],
@@ -66,8 +63,8 @@ define([
         var self = this;
         
         self.inherited(arguments);
-        	    
-	    /**
+
+        /**
         * @event onLogin
         * @param f(data) {function} function to be called.<br>
         * data is the json object coming from the server on succesfull login. 
@@ -75,7 +72,7 @@ define([
         * authentication workflow.
         */
 
-	    /**
+        /**
         * @event onLogout
         * @param f(data) {function} function to be called.<br>
         * data is the json object coming from the server on succesfull logout. 
@@ -84,13 +81,21 @@ define([
         self.createCallback(['login', 'logout']);
         
         self.log('Authenticated requests component up and running!');
-        
     },
-    
+
+    /*
+    postCreate: function() {
+        var self = this;
+        _r = registry;
+    },
+    */
+
     startup: function() {
         var self = this;
+        parser.parse();
+        self.modal = registry.byId('pundit-login-modal');
         self._initLoginDialog();
-        self.log('Startup done');
+        self.log('Started up.')
     },
 
     /**
@@ -112,7 +117,7 @@ define([
             
         // create a new stub object, exposing a then() member, 
         // who just saves the functions in the stub object itself
-        ref.then = function(f, e, x){ 
+        ref.then = function(f, e){ 
             this.orig_then = f;
             this.orig_error = e;
             return this;
@@ -192,27 +197,34 @@ define([
 
         self._setLoginState('off');
 
-        on(dojo.byId('pundit-login-open-button'), 'click', function() {
-            self.log('Opening the login dialog');
+        query(self.domNode).on('#pundit-login-open-button:click', function() {
+            self.log('Opening the login popup');
             self._openLoginPopUp();
         });
 
-        on(dojo.byId('pundit-login-open-button-again'), 'click', function() {
-            self.log('Opening the login dialog');
+        query(self.domNode).on('#pundit-login-open-button-again:click', function() {
+            self.log('Opening the login popup, again');
             self._openLoginPopUp();
         });
         
-        on(dojo.byId('pundit-login-close-button'), 'click', function() { 
-            self.log('Closing the login dialog');
+        query(self.domNode).on('#pundit-login-close-button:click', function() { 
+            self.log('Closing the login modal');
             self.hideLogin();
-            clearTimeout(self.loginTimer);
+        });
+
+        query(self.domNode).on('#pundit-logout-button:click', function() { 
+            self.log('Logging out from modal');
+            self.logout();
         });
 
         // Clear the _checklogin timeout if the modal gets closed
-        on(dojo.byId('pundit-login-modal'), 'hidden', function() {
+        // TODO: doesnt work?
+        self.modal.on('hidden', function() {
+            if (!self._loggedIn)
+                self._setLoginState('off');
             clearTimeout(self.loginTimer);
+            self.log('Closed the login modal');
         });
-	    
     },
 
     _openLoginPopUp: function() {
@@ -227,15 +239,18 @@ define([
     },
     
     _setLoginState: function(s) {
-        dojo.query('#pundit-login-modal')
+        query('#pundit-login-modal')
             .removeClass('pundit-login-state-off pundit-login-state-waiting pundit-login-state-logged')
             .addClass('pundit-login-state-'+s);
     },
     
     _checkLogin: function() {
         var self = this;
-
-        clearTimeout(self.loginTimer);
+        
+        // TODO: self.redirectURL ?
+        // TODO: this timer doesnt get reseted properly from time to time
+        
+        // clearTimeout(self.loginTimer);
         self.loginTimer = setTimeout(function() {
             self.log('Not logged in.');
             self.isLoggedIn(function(b) {
@@ -255,7 +270,7 @@ define([
         var self = this;
         
         var args = {
-            url: "http://as.thepund.it:8080/annotationserver/api/users/current",
+            url: _PUNDIT.ns.asUsersCurrent,
             handleAs: "json",
             headers: {
                 "Accept":"application/json"
@@ -267,12 +282,12 @@ define([
                 return self._handleLoginError(error, f);
             }
         }
-
         self._oldGet(args);
+
     }, // isLoggedIn()
 
     _handleLoginError: function(error, f) {
-        console.log('si ma, ara che error .....', error);
+        self.log('Error loading current login state from server..');
         if (typeof(f) === 'function') f(false, error);
         return false;
     },
@@ -316,7 +331,6 @@ define([
             self._setLoginState('off');
             self.showLogin();
         });
-        
     },
     
     /**
@@ -330,7 +344,7 @@ define([
         clearTimeout(self.loginTimer);
         
         var args = {
-            url: "http://as.thepund.it:8080/annotationserver/api/users/logout",
+            url: _PUNDIT.ns.asUsersLogout,
             handleAs: "json",
             headers: {
                 "Accept":"application/json"
@@ -355,9 +369,13 @@ define([
       * @description Shows the login modal dialog
       */
     showLogin: function() {
-        if (dojo.query('#pundit-login-modal').length > 0)
-            if (!dojo.hasClass('pundit-login-modal', 'in'))
-                dojo.query('#pundit-login-modal').modal('show');
+        var self = this;
+        
+        // if (query('#pundit-login-modal').length > 0)
+            if (!domClass.contains('pundit-login-modal', 'in')) {
+                self.log('Showing the login modal');
+                self.modal.show();
+            }
     },
     
     /**
@@ -365,9 +383,10 @@ define([
       * @description Hides the login modal dialog
       */
     hideLogin: function() {
-        if (dojo.query('#pundit-login-modal').length > 0)
-            if (dojo.hasClass('pundit-login-modal', 'in'))
-                dojo.query('#pundit-login-modal').modal('hide');
+        if (query('#pundit-login-modal').length > 0)
+            if (domClass.contains('pundit-login-modal', 'in')) {
+                registry.byId('pundit-login-modal').hide();
+            }
     },
 
     // Automatically called when the login happens
@@ -381,10 +400,10 @@ define([
         
         // Modify the modal: we are logged in
         self._setLoginState('logged');
-        dojo.query('#pundit-login-modal .modal-body span.username')
+        query('#pundit-login-modal .modal-body span.username')
             .html(data.fullName+" ("+data.email+")");
             
-        // exectue any pending blocked requests: get the stub
+        // execute any pending blocked requests: get the stub
         // object out and do a new call at that url
         for (var i = self.blockedRequests.length; i--;) {
             var foo = self.blockedRequests[i];
@@ -393,9 +412,8 @@ define([
         }
       
         // Hide the modal, if open
-        setTimeout(function() { 
-            self.hideLogin();
-        }, self.opts.loginAutomaticHideMS);
+        if (self.modal && self.modal.isShown)
+            setTimeout(function() { self.hideLogin(); }, self.opts.loginAutomaticHideMS);
 
         self.fireOnLogin(data);
         
@@ -408,7 +426,7 @@ define([
         self._loggedIn = false;
         self._loggedInAs = {};
 
-        dojo.query('#pundit-login-modal .modal-body span.username')
+        query('#pundit-login-modal span.username')
             .html("");
             
         self._setLoginState('off');
@@ -424,17 +442,18 @@ define([
             key;
 
         for (key in originalCallParams) 
-            if (key !== "load") 
-                wrappedParams[key] = originalCallParams[key];
-            else 
+            if (key === "load") {
                 wrappedParams[key] = function(r) {
                     if (r && typeof(r.redirectTo) !== "undefined") {
                         self.blockedRequests.push(wrappedParams);
                         self.redirectURL = r.redirectTo;
-                        self.showLogin();
+                        if (self.opts.showLoginModalOnFail)
+                            self.showLogin();
                     } else 
                         originalCallParams.load(r);
                 }
+            } else
+                wrappedParams[key] = originalCallParams[key];
 
         return wrappedParams;
     }

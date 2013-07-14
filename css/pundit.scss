@@ -1,8 +1,8 @@
-// Hide text and buttons depending on login state: off, waiting, logged
-#pundit-login-modal {
-    .pundit-login-modal-content {
-        height: 80px;
-    }
+
+@import "_pundit_login_modal";
+
+/* Hide text depending on login state: off, waiting, logged */
+/*#pundit-login-modal {
     &.pundit-login-state-off {
         .pundit-login-waiting, .pundit-login-logged { display: none };
     }
@@ -13,3 +13,4 @@
         .pundit-login-off, .pundit-login-waiting { display: none };
     }
 }
+*/

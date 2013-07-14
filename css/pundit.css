@@ -1,0 +1,26 @@
+/* line 3, _pundit_login_modal.scss */
+#pundit-login-modal .pundit-login-modal-content {
+  height: 80px; }
+/* line 7, _pundit_login_modal.scss */
+#pundit-login-modal.pundit-login-state-off .pundit-login-waiting, #pundit-login-modal.pundit-login-state-off .pundit-login-logged {
+  display: none; }
+/* line 10, _pundit_login_modal.scss */
+#pundit-login-modal.pundit-login-state-waiting .pundit-login-off, #pundit-login-modal.pundit-login-state-waiting .pundit-login-logged {
+  display: none; }
+/* line 13, _pundit_login_modal.scss */
+#pundit-login-modal.pundit-login-state-logged .pundit-login-off, #pundit-login-modal.pundit-login-state-logged .pundit-login-waiting {
+  display: none; }
+
+/* Hide text depending on login state: off, waiting, logged */
+/*#pundit-login-modal {
+    &.pundit-login-state-off {
+        .pundit-login-waiting, .pundit-login-logged { display: none };
+    }
+    &.pundit-login-state-waiting {
+        .pundit-login-off, .pundit-login-logged { display: none };
+    }
+    &.pundit-login-state-logged {
+        .pundit-login-off, .pundit-login-waiting { display: none };
+    }
+}
+*/

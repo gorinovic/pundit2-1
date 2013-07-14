@@ -2,7 +2,10 @@ REPORTER = spec
 
 all: clean docs test-cov test
 	
-test:
+lint:
+	./node_modules/jshint/bin/jshint ./src --config ./jshintConfig.json --show-non-errors
+
+test: lint
 	@NODE_ENV=test \
 	./node_modules/.bin/mocha \
 	--reporter $(REPORTER) \

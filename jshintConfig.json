@@ -1,0 +1,15 @@
+{
+    "undef": true,
+    "unused": true,
+    "browser": true, 
+    "dojo": true,
+    "curly": true, 
+    "trailing": true,
+    "camelcase": true,
+    "eqeqeq": true,
+    "multistr": true,
+    "globals": {
+        "_PUNDIT": false,
+        "punditConfig": false
+    }
+}

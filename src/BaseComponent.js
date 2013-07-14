@@ -66,10 +66,19 @@ define([
             if (typeof(self.opts[i]) === 'undefined')
                 self.opts[i] = self.defaultOpts[i];
 
+        // If there's no _PUNDIT, or there's no namespace, create it
+        if (typeof(_PUNDIT) === 'undefined') {
+            _PUNDIT = {};
+        }
+        if (typeof(_PUNDIT.ns) === 'undefined') {
+            require(["pundit/NameSpace"], function(PunditNS) {
+                _PUNDIT.ns = new PunditNS();
+            });
+        }
+        
         // If _PUNDIT, _PUNDIT.config and _PUNDIT.config.modules.THISMODULENAME are
         // defined, get that configuration and initialize the component
-        if (typeof(_PUNDIT) !== 'undefined' && typeof(_PUNDIT.config) !== 'undefined'
-                && typeof(_PUNDIT.config.modules[self.declaredClass]) !== 'undefined') {
+        if (typeof(_PUNDIT.config) !== 'undefined' && typeof(_PUNDIT.config.modules[self.declaredClass]) !== 'undefined') {
             var configOpts = _PUNDIT.config.modules[self.declaredClass];
             for (i in configOpts) 
                 self.opts[i] = configOpts[i];

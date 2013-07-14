@@ -3,7 +3,10 @@
     to the predicates used to describe items and notebooks etc
     @class pundit.ns
 **/
-define(["dojo/_base/declare"], function(declare) {
+define([
+    "dojo/_base/declare", 
+    "dojo/_base/config"
+], function(declare, config) {
     return declare("pundit.ns", [], {
 
     defaultOpts: {
@@ -43,7 +46,8 @@ define(["dojo/_base/declare"], function(declare) {
         self.pundit_VocabCategory = "http://purl.org/pundit/vocab/category";
         
         // Annotation server constants
-        self.as                   = "http://as.thepund.it:8080/annotationserver/";
+        // Annotation server constants
+        self.as                   = config.pundit.annotationServer;
         self.asApi                = self.as + "api/";
 
         self.asNbAnnList          = self.asApi + "notebooks/{id}/annotations/metadata";

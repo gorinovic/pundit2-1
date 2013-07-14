@@ -55,8 +55,9 @@ define(["pundit/BaseComponent", "myTest/TestExtendedBaseComponent"], function(Ba
         test('Extended BaseComponent pundit configuration', function() {
             var compE3; 
 
-            // Create a the global configuration variable, and test the
+            // Create the global configuration variable, and test the
             // component against supplied custom options
+            var foo = _PUNDIT;
             _PUNDIT = {config: {modules: {}}};
             _PUNDIT.config.modules['TestExtendedBaseComponent'] = {
                 myOption: 'myValue',
@@ -68,7 +69,8 @@ define(["pundit/BaseComponent", "myTest/TestExtendedBaseComponent"], function(Ba
             expect(compE3.opts).to.be.a("object");
             expect(compE3.opts.myOption).equal("myValue");
             expect(compE3.opts.myOption2).equal("myValue2");
-
+            delete _PUNDIT.config.modules.TestExtendedBaseComponent;
+            _PUNDIT = foo;
         });
 
         

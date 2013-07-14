@@ -1,10 +1,16 @@
-define(["pundit/AuthenticatedRequester"], function(AuthenticatedRequester) {
+define([            
+    "dojo/query",
+    "pundit/AuthenticatedRequester"
+], function(query, AuthenticatedRequester) {
 
     suite("Authenticated Requester", function() {
         var ar;
                 
         setup(function() {
-            ar = new AuthenticatedRequester();
+            if (!ar) {
+                ar = new AuthenticatedRequester({showLoginModalOnFail: false});
+                ar.placeAt(query('body')[0]);
+            }
         });
 
         test('.HTTP_ERROR_FORBIDDEN sanity checks', function() {
@@ -50,7 +56,7 @@ define(["pundit/AuthenticatedRequester"], function(AuthenticatedRequester) {
             expect(ar.blockedRequests.length).equal(0);
         });
         
-        test('_setWrappingCallParams + redirect-to json must put an item in blockedRequests ', function() {
+        test('_setWrappingCallParams + redirect-to json must put an item in blockedRequests', function() {
             var redirectTo = 'test',
                 fake = {
                     load: function() {},

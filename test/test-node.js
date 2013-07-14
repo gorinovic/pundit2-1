@@ -7,9 +7,14 @@ navigator = window.navigator;
 _PUNDIT = {};
 
 dojoConfig = {
-    async: 1,
+    isDebug: 1,
     parseOnLoad: true,
-    isDebug: true, 
+    selectorEngine: "acme",
+    async: true,
+    waitSeconds: 10,
+    has: {
+        "dojo-debug-messages": true
+    },
 
     packages: [
         { name: 'myTest', location: '../../../test' },
@@ -17,7 +22,10 @@ dojoConfig = {
         { name: 'dijit', location: '../../../lib/dojo/dijit' },
         { name: 'bootstrap', location: '../../../lib/dojo-bootstrap' }
     ],
-    deps: ["myTest/Test"]
+    deps: ["myTest/Test"],
+    pundit: {
+        annotationServer: 'foo.foo:8080'
+    }
 };
 
 if (process.env.COVERAGE) {
@@ -25,12 +33,5 @@ if (process.env.COVERAGE) {
 } else {
     dojoConfig.packages.push({ name: 'pundit', location: '../../../src' });
 }
-
-
-/*
-## TODO : test-cov.html deve caricare pundit col codice di coverage
-## TODO : configurare jscoverage ?
-## TODO : .gitignore di tutta sta roba ?
-*/
 
 require('../lib/dojo/dojo/dojo.js');

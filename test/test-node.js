@@ -1,5 +1,12 @@
 expect = require('chai').expect;
 jsdom = require('jsdom');
+
+XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+sinon = require("sinon");
+require("sinon/lib/sinon/util/event")
+require("sinon/lib/sinon/util/fake_xml_http_request");
+
 window = jsdom.jsdom().createWindow();
 document = window.document;
 navigator = window.navigator;
@@ -10,10 +17,14 @@ dojoConfig = {
     isDebug: 1,
     parseOnLoad: true,
     selectorEngine: "acme",
-    async: true,
+    async: 0,
     waitSeconds: 10,
     has: {
-        "dojo-debug-messages": true
+        "dojo-debug-messages": 1,
+        /*
+        "native-xhr2": 0,
+        "native-xhr": 1
+        */
     },
 
     packages: [
@@ -24,7 +35,7 @@ dojoConfig = {
     ],
     deps: ["myTest/Test"],
     pundit: {
-        annotationServer: 'foo.foo:8080'
+        annotationServer: 'foo.foo.bar:8080/'
     }
 };
 

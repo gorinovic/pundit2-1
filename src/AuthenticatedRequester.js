@@ -401,15 +401,15 @@ define([
         var self = this;
 
         self.log("Logged in as: " + data.fullName+" ("+data.email+")");
-        
+
         self._loggedIn = true;
         self._loggedInAs = data;
-        
+
         // Modify the modal: we are logged in
         self._setLoginState('logged');
         query('#pundit-login-modal .modal-body span.username')
             .html(data.fullName+" ("+data.email+")");
-            
+
         // execute any pending blocked requests: get the stub
         // object out and do a new call at that url
         for (var i = self.blockedRequests.length; i--;) {
@@ -417,7 +417,7 @@ define([
             self.get(foo.url, foo.params)
                 .then(foo.ref.origThen, foo.ref.origError);
         }
-      
+
         // Hide the modal, if open
         if (self.modal && self.modal.isShown) {
             self.hideModalTimer = setTimeout(function() { self.hideLogin(); }, self.opts.loginAutomaticHideMS);

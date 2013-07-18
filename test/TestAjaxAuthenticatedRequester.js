@@ -3,6 +3,9 @@ define([
     "pundit/AuthenticatedRequester"
 ], function(query, AuthenticatedRequester) {
 
+    /*
+    TODO: worth writing tests with fakeServer?
+    
     suite("AJAX AR (sinon server)", function() {
         var ar, server;
             
@@ -46,15 +49,19 @@ define([
         });
         
     });
+    */
 
-    suite("AJAX AR (sinon FakeXMLHttpRequest)", function() {
+    suite("AJAX Authenticated Requester [Sinon.JS]", function() {
         var ar, xhr, request;
 
         setup(function() {
             delete _PUNDIT;
+
             xhr = sinon.useFakeXMLHttpRequest();
+            // DEBUG: overwrite the global XMLHttpRequest with sinon's, since 
+            // it does not under node :(
+            XMLHttpRequest = sinon.FakeXMLHttpRequest;
             requests = [];
-            
             xhr.onCreate = function(xhr) { requests.push(xhr); };
             
             ar = new AuthenticatedRequester({});
@@ -89,7 +96,6 @@ define([
             
             requests[0].respond(200, { "Content-Type": "application/json" }, JSON.stringify(res));
         });
-        
         
     });
 

@@ -11,7 +11,9 @@
         "jscoverage": "0.3.6",
         "mocha-lcov-reporter" : "0.0.1",
         "coveralls": "2.x",
-        "jshint": "2.1.x"
+        "jshint": "2.1.x",
+        "sinon": "1.7.x",
+        "xmlhttprequest": "1.6.x"
     },
     "scripts": {
         "test": "make test-coveralls"

@@ -5,13 +5,16 @@ define([
 
     suite("Authenticated Requester", function() {
         var ar;
-                
+        
         setup(function() {
             delete _PUNDIT;
-            if (!ar) {
-                ar = new AuthenticatedRequester({showLoginModalOnFail: false});
-                ar.placeAt(query('body')[0]);
-            }
+            ar = new AuthenticatedRequester({showLoginModalOnFail: false});
+        });
+        
+        teardown(function() {
+            ar.destroy();
+            delete ar;
+            delete _PUNDIT;
         });
 
         test('.HTTP_ERROR_FORBIDDEN sanity checks', function() {
@@ -39,17 +42,19 @@ define([
             });
         });
 
-        test('_handleLoginLoad() with .loginStatus: 1', function() {
+        test('_handleLoginLoad() with .loginStatus: 1', function(done) {
             var json = {loginStatus: 1};
             ar._handleLoginLoad(json, function(b, data) {
                 expect(b).equal(true);
+                done();
             });
         });
 
-        test('_handleLoginLoad() with .loginStatus: 0', function() {
+        test('_handleLoginLoad() with .loginStatus: 0', function(done) {
             var json = {loginStatus: 0};
             ar._handleLoginLoad(json, function(b, data) {
                 expect(b).equal(false);
+                done();
             });
         });
         

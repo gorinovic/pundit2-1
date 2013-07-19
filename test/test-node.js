@@ -1,7 +1,7 @@
 expect = require('chai').expect;
 jsdom = require('jsdom');
 
-XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+XMLHttpRequest = function(){};
 
 sinon = require("sinon");
 require("sinon/lib/sinon/util/event")

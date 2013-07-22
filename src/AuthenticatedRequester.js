@@ -113,9 +113,19 @@ define([
     */
     
     get: function(url, callParams) {
-        var self = this,
-            foo = xhr.get(url, callParams), // self._setWrappingCallParams(callParams)),
-            ref = {};
+        var self = this, foo, ref = {};
+        
+        if (typeof(callParams.withCredentials) === 'undefined') {
+            callParams.withCredentials = true;
+            callParams.handleAs = "json";
+            callParams.headers = {
+                "Accept":"application/json"
+            };
+        }
+        
+        // TODO: accept the method from passed callParams if there's one!
+        callParams.method = 'GET';
+        foo = xhr(url, callParams);
             
         // create a new stub object, exposing a then() member, 
         // who just saves the functions in the stub object itself
@@ -132,24 +142,26 @@ define([
         // we're authenticated with the server already, pass it on
         // TODO: deal with error: r, e
         foo.then(function(r){
-            
             if (r && typeof(r.redirectTo) !== "undefined") {
                 // Save the request, along with the object which
                 // will store any future .then() calls on our
                 // fake object
+                // TODO: check if there's a similar one queued already
+                // TODO: add a .method field
                 self.blockedRequests.push({
                     ref: ref,
                     url: url,
                     params: callParams
                 });
                 self.redirectURL = r.redirectTo;
-                self.showLogin();
+                self.log('Received redirectTo from server, saving '+url);
+                if (self.opts.showLoginModalOnFail) { self.showLogin(); }
             } else {
-                // TODO: deal with error: r, e
                 ref.origThen(r);
             }
             
         }, function(r, e, x) {
+            self.log('Received error from server getting url');
             if (typeof(ref.origError) === "function") { ref.origError(r, e, x); }
         });
 
@@ -268,7 +280,7 @@ define([
     isLoggedIn: function(f) {
         var self = this;
         
-        self.log('isLoggedIn starting login check'+_PUNDIT.ns.asUsersCurrent);
+        self.log('isLoggedIn starting login check '+_PUNDIT.ns.asUsersCurrent);
         
         var args = {
             url: _PUNDIT.ns.asUsersCurrent,
@@ -285,7 +297,6 @@ define([
                 return self._handleLoginError(error, f);
             }
         };
-        // xhr.get(args);
         self._oldGet(args);
 
     }, // isLoggedIn()
@@ -392,6 +403,7 @@ define([
         var self = this;
         
         if (self.modal && self.modal.isShown) {
+            self.log('Hiding the login modal');
             self.modal.hide();
         }
     },
@@ -414,6 +426,9 @@ define([
         // object out and do a new call at that url
         for (var i = self.blockedRequests.length; i--;) {
             var foo = self.blockedRequests[i];
+            self.log('Executing blocked request to '+ foo.url);
+            // TODO: dont call get() but write the method in the blockedRequests
+            // objects and use it here
             self.get(foo.url, foo.params)
                 .then(foo.ref.origThen, foo.ref.origError);
         }

@@ -63,7 +63,6 @@ define([
         self.asNotebooksGraph     = self.asApi + "notebooks/graph/";
         self.asCurrentNotebook    = self.asApi + "notebooks/current";
         self.asNotebooksActive    = self.asApi + "notebooks/active";
-        self.asOwnedNotebooks     = self.asApi + "notebooks/owned";
 
         self.asOpenNbAnnList      = self.asApi + "open/notebooks/{id}/annotations/metadata";
         self.asOpenNotebooksMeta  = self.asApi + "open/notebooks/{id}/metadata";
@@ -84,6 +83,10 @@ define([
         self.asUsers              = self.asApi + "users/";
         self.asUsersCurrent       = self.asApi + "users/current";
         self.asUsersLogout        = self.asApi + "users/logout";
+
+        self.asNotebooksOwned     = self.asApi + "notebooks/owned";
+
+        self.asServPrefs          =self.asApi + "services/preferences/";
 
         /*
         self.lodLiveURL = "http://thepund.it/lodlive/app_en.html";

@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>Test: login modal</title>
+        <link href="../css/pundit.css" type="text/css" rel="stylesheet" media="screen" charset="utf-8">
+        <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <script src="../punditConfig.js"></script>
+    <script src="../lib/dojo/dojo/dojo.js"></script>
+
+<body>    
+
+    <button id="test-isLoggedIn" class="btn btn-primary">is logged in</button>
+    <button id="test-showLogin" class="btn btn-primary">show login</button>
+    <button id="test-logout" class="btn btn-danger">logout</button>
+    <button id="test-owned" class="btn btn-primary">owned notebooks</button>
+    <div id="msg">
+        
+    </div>
+    <script>
+        require([
+            "dojo/query",
+            "dojo/on",
+            "pundit/AuthenticatedRequester"
+        ], function(query, on, AuthenticatedRequester) {
+
+            ar = new AuthenticatedRequester({debug: true}).placeAt(query('body')[0]);
+            ar.startup();
+            
+            var msg = function(m) {
+                ar.log(m);
+                query('#msg')[0].innerHTML += "<div>"+(new Date()).toString()+" "+m+"</div>";
+            }
+            
+            query('#test-isLoggedIn').on('click', function() {
+                msg("ASynch LoggedIn request started");
+                ar.isLoggedIn(function(flag, data){
+                    if (flag) {
+                        msg("Logged in as "+data.fullName);
+                    } else {
+                        msg("NOT Logged in");
+                    }
+                });
+            });
+            query('#test-showLogin').on('click', function() {
+                ar.showLogin();
+            });
+            query('#test-logout').on('click', function() {
+                msg("ASynch logout request started");
+                ar.logout(function(data){
+                    msg("Logged out! "+data.msg);
+                });
+            });
+            
+            ar.onLogin(function(data) {
+                msg("Callback: logged in as "+data.fullName);
+            });
+
+            ar.onLogout(function() {
+                msg("Callback: logged out");
+            });
+
+            query('#test-owned').on('click', function() {
+                ar.get(_PUNDIT.ns.asServPrefs+'favorites', {}).then(
+                    function(data) { msg('Serv Prefs then '+JSON.stringify(data)); }, 
+                    function(e) { msg('err '+e); console.log(arguments); });
+            });
+            
+            // test:
+            // pundit-login-state-off after click on close
+            // fake login page opened
+            // login=false, modal state
+            // login=true, modal state
+            // login completed callback
+            // check timers on close etc
+            /*
+Sat Jul 13 2013 15:57:38 GMT+0200 (CEST) Callback: logged in as Simone Fonda
+Sat Jul 13 2013 15:57:38 GMT+0200 (CEST) Logged in as Simone Fonda
+Sat Jul 13 2013 15:57:47 GMT+0200 (CEST) Callback: logged out
+Sat Jul 13 2013 15:57:55 GMT+0200 (CEST) Logged out! You werent logged in.. and you still arent.
+Sat Jul 13 2013 15:58:01 GMT+0200 (CEST) NOT Logged in
+Sat Jul 13 2013 15:58:08 GMT+0200 (CEST) Callback: logged in as Simone Fonda
+Sat Jul 13 2013 15:58:14 GMT+0200 (CEST) Logged out! Logged out succesfully
+Sat Jul 13 2013 15:58:14 GMT+0200 (CEST) Callback: logged out
+            */
+            
+        });
+    </script>
+</html></body>
